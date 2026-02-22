@@ -104,6 +104,7 @@ namespace BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO
         /// Optional. A pair that is missing throughout the movement. Alternatively this can be specified by
         /// Leaving out the opponent for a pair that would have met the missing pair. However, BCS will be able
         /// to discern a sit-out table from an empty table if this value is used.
+        /// When using a two winner movement a positive number denotes a missing NS pair, a negative value denotes a missing EW pair.
         /// </summary>
         public int MissingPair
         {
