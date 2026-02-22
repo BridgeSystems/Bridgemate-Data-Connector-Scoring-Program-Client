@@ -201,9 +201,9 @@ namespace BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO
             {
                 validationMessages.Add($"{nameof(ScoringGroupNumber)} ({ScoringGroupNumber}) must be greater than zero.");
             }
-            if (MissingPair < 0)
+            if (MissingPair < 0 && Winners!=2)
             {
-                validationMessages.Add($"{nameof(MissingPair)} ({MissingPair}) must at least zero.");
+                validationMessages.Add($"{nameof(MissingPair)} ({MissingPair}) must at least be zero for a one winner section.");
             }
             if (Winners < 1 || Winners > 2)
             {
