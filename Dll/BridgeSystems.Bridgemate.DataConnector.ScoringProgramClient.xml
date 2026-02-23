@@ -4,11 +4,74 @@
         <name>BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient</name>
     </assembly>
     <members>
+        <member name="T:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.AddSessionDTO">
+            <summary>
+            Use this DTO to add a session to an existing event.
+            </summary>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.AddSessionDTO.#ctor">
+            <summary>
+            Initializes the DTO.
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.AddSessionDTO.EventGuid">
+            <summary>
+            Required. The guid of the event to add this session to.
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.AddSessionDTO.ClubId">
+            <summary>
+            Required when using http for communication with the data connector.
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.AddSessionDTO.Session">
+            <summary>
+            Required
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.AddSessionDTO.PlayerData">
+            <summary>
+            Optional: the data of at least the players that will participate in the session.
+            <see cref="T:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.PlayerDataDTO">Player data</see> is required for every <see cref="T:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.ParticipationDTO">participation</see> that has its a SessionGuid and PlayerNumber properties set.
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.AddSessionDTO.Participations">
+            <summary>
+            Optional. Each <see cref="T:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.ParticipationDTO">participation</see> with its SessionGuid and PlayerNumber properties set must have a corresponding
+            <see cref="T:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.PlayerDataDTO">player data</see> element that specifies at least its name.
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.AddSessionDTO.Handrecords">
+            <summary>
+            Optional. The handrecords for each session.
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.AddSessionDTO.Bridgemate2Settings">
+            <summary>
+            Optional. The settings for the Bridgemate 2 for all sections (if in use).
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.AddSessionDTO.Bridgemate3Settings">
+            <summary>
+            Optional. The settings for the Bridgemate 3 for all sections (if in use).
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.AddSessionDTO.ValidationMessages">
+            <summary>
+            An array of messages describing problems in data integrity and invalid values.
+            </summary>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.AddSessionDTO.Validate">
+            <summary>
+            Validates the DTO. Produces validation messages if there are problems. 
+            </summary>
+            <returns>True if there are no validation errors.</returns>
+        </member>
         <member name="T:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.BCSManagementRequestDTO">
             <summary>
             Carries information on a management request for BCS.
-            Is used as a parameter for the <see cref="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.IssueManagementCommand(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.BCSManagementRequestDTO)">ScoringProgramPipeClient.IssueManagementCommand</see> method 
-            or the <see cref="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.IssueManagementCommandAsync(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.BCSManagementRequestDTO)">ScoringProgramPipeClient.IssueManagementCommandAsync</see> method.
+            Is used as a parameter for the <see cref="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.IssueManagementCommand(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.BCSManagementRequestDTO)">ScoringProgramPipeClient.IssueManagementCommand</see> method 
+            or the <see cref="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.IssueManagementCommandAsync(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.BCSManagementRequestDTO)">ScoringProgramPipeClient.IssueManagementCommandAsync</see> method.
             </summary>
         </member>
         <member name="F:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.BCSManagementRequestDTO.ShutDownNow">
@@ -23,12 +86,17 @@
         </member>
         <member name="F:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.BCSManagementRequestDTO.GetScoringFileLocation">
             <summary>
-            Returns the full path to the scoring file (i.e. for back-up purposes). Can be combined with GetRunningSessions.
+            Returns the full path to the scoring file (i.e. for back-up purposes). Can be combined with GetRunningSessions and GetDataConnectorFileLocation.
             </summary>
         </member>
         <member name="F:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.BCSManagementRequestDTO.GetAllSessionsInformation">
             <summary>
             Asks the Data Connector to return an array of eventguid-sessionguid-session name pairs for all sessions in the scoring file.
+            </summary>
+        </member>
+        <member name="F:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.BCSManagementRequestDTO.GetDataConnectorFileLocation">
+            <summary>
+            Returns the full path to the data connector messages file (i.e. for back-up purposes). Can be combined with GetRunningSessions and GetScoringFileLocaation.
             </summary>
         </member>
         <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.BCSManagementRequestDTO.Command">
@@ -47,37 +115,6 @@
             Validates the DTO. Produces validation messages if there are problems. 
             </summary>
             <returns>True if there are no validation errors.</returns>
-        </member>
-        <member name="T:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SessionInfoDTO">
-            <summary>
-            Contains information on sessions that BCS knows and/or is currently administering.
-            Can only occur as a child of a BCSManagementResponseDTO.
-            </summary>
-        </member>
-        <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SessionInfoDTO.EventGuid">
-            <summary>
-            The guid of the event that the session is part of. Can be the same as the session guid when there is only one session.
-            </summary>
-        </member>
-        <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SessionInfoDTO.SessionGuid">
-            <summary>
-            The guid of the session
-            </summary>
-        </member>
-        <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SessionInfoDTO.SessionName">
-            <summary>
-            The name of the session
-            </summary>
-        </member>
-        <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SessionInfoDTO.SessionDateTime">
-            <summary>
-            The date and time that the session was scheduled to start.
-            </summary>
-        </member>
-        <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SessionInfoDTO.HasBeenProcessed">
-            <summary>
-            Signals if the InitDto of the session has been processed.
-            </summary>
         </member>
         <member name="T:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.BCSManagementResponseDTO">
             <summary>
@@ -102,6 +139,11 @@
         <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.BCSManagementResponseDTO.ScoringFilePath">
             <summary>
             The location of the scoring file. Can be used for back-up purposes.
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.BCSManagementResponseDTO.DataConnectorFilePath">
+            <summary>
+            The location of the Data Connector messages file. Can be used for back-up purposes.
             </summary>
         </member>
         <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.BCSManagementResponseDTO.ValidationMessages">
@@ -1010,14 +1052,14 @@
             Handrecords cannot be entered by the players.
             </summary>
         </member>
-        <member name="F:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.Bm3EnterHandrecordOption.AtEndOfRound">
-            <summary>
-            Handrecords can be entered at the end of the round.
-            </summary>
-        </member>
         <member name="F:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.Bm3EnterHandrecordOption.AtEndOfBoard">
             <summary>
             Handrecords can be entered after play of the board.
+            </summary>
+        </member>
+        <member name="F:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.Bm3EnterHandrecordOption.AtEndOfRound">
+            <summary>
+            Handrecords can be entered at the end of the round.
             </summary>
         </member>
         <member name="T:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.Bm3ConnectionModeOption">
@@ -1199,14 +1241,19 @@
         </member>
         <member name="T:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.ContinueDTO">
             <summary>
-            Instructs BCS to continue working with a previously created event using the <see cref="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.Continue(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.ContinueDTO)">ScoringProgramPipeClient.Continue</see> method 
-            or the <see cref="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.ContinueAsync(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.ContinueDTO)">ScoringProgramPipeClient.ContinueAsync</see> method.
+            Instructs BCS to continue working with a previously created event using the <see cref="!:ScoringProgramPipeClient.Continue(ContinueDTO)">ScoringProgramPipeClient.Continue</see> method 
+            or the <see cref="!:ScoringProgramPipeClient.ContinueAsync(ContinueDTO)">ScoringProgramPipeClient.ContinueAsync</see> method.
             </summary>
         </member>
         <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.ContinueDTO.EventGuid">
             <summary>
             Tells BCS which event to continue.
             When there is only one session the event guid will be its session guid unless it was set to a different value in the original InitDTO.
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.ContinueDTO.ClubId">
+            <summary>
+            Required when using the http interface for the dataconnector
             </summary>
         </member>
         <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.ContinueDTO.Commands">
@@ -1477,8 +1524,8 @@
             <summary>
             Contains information on how to construct a new event, with its sessions, sections, tables and rounds.
             Optionally player data, participations and handrecords can be added. Doing this is more performant than adding them later.
-            Is used as a parameter for the <see cref="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.Initialize(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.InitDTO)">ScoringProgramPipeClient.Initialize</see> or the 
-            <see cref="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.InitializeAsync(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.InitDTO)">ScoringProgramPipeClient.InitializeAsync</see> method.
+            Is used as a parameter for the <see cref="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.Initialize(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.InitDTO)">ScoringProgramPipeClient.Initialize</see> or the 
+            <see cref="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.InitializeAsync(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.InitDTO)">ScoringProgramPipeClient.InitializeAsync</see> method.
             </summary>
         </member>
         <member name="F:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.InitDTO.StartBCS">
@@ -1521,6 +1568,11 @@
             Instructs the Data Connector to clear all its previous data and start with a clean slate.
             </summary>
         </member>
+        <member name="F:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.InitDTO.Command_UseHttp">
+            <summary>
+            Instructs the Data Connector to use communicate over http.
+            </summary>
+        </member>
         <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.InitDTO.Commands">
             <summary>
             Instructions to BCS. Add up the values to combine.<br/>
@@ -1537,6 +1589,11 @@
         <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.InitDTO.EventGuid">
             <summary>
             Required if the number of sessions is greater than one. This signals that BCS should administer these sessions together.
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.InitDTO.ClubId">
+            <summary>
+            Required when using http for communication with the data connector.
             </summary>
         </member>
         <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.InitDTO.AlternativeDataFolder">
@@ -1683,6 +1740,11 @@
         <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.PlayerDataDTO.SessionGuid">
             <summary>
             Required, the guid of the session the player participates in.
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.PlayerDataDTO.ClubId">
+            <summary>
+            Required when using the http interface for the dataconnector
             </summary>
         </member>
         <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.PlayerDataDTO.PlayerNumber">
@@ -2086,6 +2148,11 @@
             If used the MatesTableSectionLetters and the MatesTableNumber properties must be set as well.
             </summary>
         </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.RoundDTO.Updated">
+            <summary>
+            Currently not in use for scoring programs. Used for internal administration when handling movement updates.
+            </summary>
+        </member>
         <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.RoundDTO.ValidationMessages">
             <summary>
             An array of messages describing problems in data integrity and invalid values.
@@ -2189,6 +2256,11 @@
             Required, must match the Guid of its SessionDTO parent.
             </summary>
         </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.ScoringGroupDTO.ClubId">
+            <summary>
+            Required when using http for communication with the data connector.
+            </summary>
+        </member>
         <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.ScoringGroupDTO.Sections">
             <summary>
             Required when the dto is part of the InitDTO, must be at least one. 
@@ -2241,6 +2313,11 @@
             This class is a container for participants that can potentially meet each other during the session. Their results will be compared and they will be
             ranked against each other. 
             Note: if the section is part of a scoringgroup together with an other section the scoring calculation will treat these sections as one.
+            </summary>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SectionDTO.#ctor">
+            <summary>
+            Constructor. Initializes the object with default values.
             </summary>
         </member>
         <member name="F:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SectionDTO.GameType_Pairs">
@@ -2300,6 +2377,13 @@
             Optional. A pair that is missing throughout the movement. Alternatively this can be specified by
             Leaving out the opponent for a pair that would have met the missing pair. However, BCS will be able
             to discern a sit-out table from an empty table if this value is used.
+            When using a two winner movement a positive number denotes a missing NS pair, a negative value denotes a missing EW pair.
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SectionDTO.KeepBridgematesAlive">
+            <summary>
+            When "true" the Bridgemate (2) server will be instructed to net close the session when the result for the last available round
+            have been received. In this way it is possible to play Swiss matches.
             </summary>
         </member>
         <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SectionDTO.IsCombiSection">
@@ -2342,9 +2426,44 @@
             </summary>
             <returns>True if there are no validation errors.</returns>
         </member>
+        <member name="T:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SectionInfoDTO">
+            <summary>
+            Caries information on a section within a session.
+            </summary>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SectionInfoDTO.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SectionInfoDTO"/> class.
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SectionInfoDTO.SectionName">
+            <summary>
+            The name of the section
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SectionInfoDTO.SectionLetters">
+            <summary>
+            The letters assigned to the section
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SectionInfoDTO.ScoringGroupNumber">
+            <summary>
+            The number of the scoring group for the section.
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SectionInfoDTO.NumberOfTables">
+            <summary>
+            The number of tables in the section
+            </summary>
+        </member>
         <member name="T:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SectionUpdateDTO">
             <summary>
             Contains information for an updated or added section
+            </summary>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SectionUpdateDTO.#ctor">
+            <summary>
+            Creates a new SectionUpdateDTO
             </summary>
         </member>
         <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SectionUpdateDTO.SessionGuid">
@@ -2352,6 +2471,11 @@
             Required. The guid of the session the section is part of.
             A string built from a Guid, without the curly braces or connecting dashes.
             The letters must be capitals
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SectionUpdateDTO.ClubId">
+            <summary>
+            Required when using the http interface for the dataconnector
             </summary>
         </member>
         <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SectionUpdateDTO.ScoringGroupNumber">
@@ -2397,6 +2521,13 @@
             Optional. A pair that is missing throughout the movement. Alternatively this can be specified by
             Leaving out the opponent for a pair that would have met the missing pair. However, BCS will be able
             to discern a sit-out table from an empty table if this value is used.
+            When using a two winner movement a positive number denotes a missing NS pair, a negative value denotes a missing EW pair.
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SectionUpdateDTO.KeepBridgematesAlive">
+            <summary>
+            When "true" the Bridgemate (2) server will be instructed to net close the session when the result for the last available round
+            have been received. In this way it is possible to play Swiss matches.
             </summary>
         </member>
         <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SectionUpdateDTO.IsCombiSection">
@@ -2533,6 +2664,47 @@
             </summary>
             <returns>True if there are no validation errors.</returns>
         </member>
+        <member name="T:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SessionInfoDTO">
+            <summary>
+            Contains information on sessions that BCS knows and/or is currently administering.
+            Can only occur as a child of a BCSManagementResponseDTO.
+            </summary>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SessionInfoDTO.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SessionInfoDTO"/> class.
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SessionInfoDTO.EventGuid">
+            <summary>
+            The guid of the event that the session is part of. Can be the same as the session guid when there is only one session.
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SessionInfoDTO.SessionGuid">
+            <summary>
+            The guid of the session
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SessionInfoDTO.SessionName">
+            <summary>
+            The name of the session
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SessionInfoDTO.SessionDateTime">
+            <summary>
+            The date and time that the session was scheduled to start.
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SessionInfoDTO.HasBeenProcessed">
+            <summary>
+            Signals if the InitDto of the session has been processed.
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SessionInfoDTO.Sections">
+            <summary>
+            Information on the sections within the session.
+            </summary>
+        </member>
         <member name="T:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.TableDirection">
             <summary>
             Specifies the positions on a table.
@@ -2608,6 +2780,87 @@
             Validates the DTO. Produces validation messages if there are problems. 
             </summary>
             <returns>True if there are no validation errors.</returns>
+        </member>
+        <member name="T:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorClientCommandManager`1">
+            <summary>
+            Defines shared code for client classes for the dataconnector. Clients for the scoringprogram and BCS both inherit from this class.
+            </summary>
+            <typeparam name="TCommand"></typeparam>
+        </member>
+        <member name="F:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorClientCommandManager`1.ApplicationName">
+            <summary>
+            Then application name
+            </summary>
+        </member>
+        <member name="F:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorClientCommandManager`1.DefaultTimeOutInMilliSeconds">
+            <summary>
+            The default time to wait for a connection attempt to succeed.
+            </summary>
+        </member>
+        <member name="F:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorClientCommandManager`1.DataConnectorClientLogger">
+            <summary>
+            NLog implementation of logging.
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorClientCommandManager`1.IsActive">
+            <summary>
+            Returns true if the
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorClientCommandManager`1.TimeOutInMilliSeconds">
+            <summary>
+            The timeout for establishing a connection with the Data Connector.
+            If not set the default value DefaultTimeOutInMilliSeconds will be used.
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorClientCommandManager`1.LoggingSource">
+            <summary>
+            The source for the logging: Client or Server, BCS or ScoringProgram.
+            </summary>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorClientCommandManager`1.Dispose">
+            <summary>
+            Disposes the class.
+            </summary>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorClientCommandManager`1.Dispose(System.Boolean)">
+            <summary>
+            Disposes the class.
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorClientCommandManager`1.Connect(System.String)">
+            <summary>
+            Connects to the dataconnector synchronously.
+            </summary>
+            <param name="connectionName">data needed to locate the dataconnector</param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorClientCommandManager`1.ConnectAsync(System.String)">
+            <summary>
+            Connects to the dataconnector asynchronously.
+            </summary>
+            <param name="connectionName">data needed to locate the dataconnector</param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorClientCommandManager`1.LogError(System.Exception)">
+            <summary>
+            Logs an error
+            </summary>
+            <param name="ex"></param>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorClientCommandManager`1.LogMethodEntry(System.String)">
+            <summary>
+            Logs the entry to a method.
+            </summary>
+            <param name="entry"></param>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorClientCommandManager`1.LogMethodEntry(System.String,System.ValueTuple{System.String,System.Object}[])">
+            <summary>
+            Logs the entry to a method with its parameters (if any),
+            </summary>
+            <param name="methodName"></param>
+            <param name="parameters"></param>
         </member>
         <member name="T:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorLogCreator">
             <summary>
@@ -2818,130 +3071,95 @@
             <param name="parameters"></param>
             <returns></returns>
         </member>
-        <member name="T:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClient`1">
+        <member name="T:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClientConnectionManager`1">
             <summary>
-            The base class for the <see cref="T:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient">ScoringProgram pipe client</see> and the BCS pipe client (not in this code base).
-            Used to connect to and disconnect from the Data Connector.
+            Handles connection to the dataconnector from scoringprogram clients and the BCS client.
             </summary>
+            <typeparam name="TCommand"></typeparam>
         </member>
-        <member name="F:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClient`1._dataConnectorStream">
+        <member name="F:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClientConnectionManager`1._dataConnectorStream">
             <summary>
             All processes below are dispoable. They can and must be disposed when the class is no longer in use. Otherwise the 
             communication with the Data Connector will stall.
             </summary>
         </member>
-        <member name="F:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClient`1.DataConnectorClientLogger">
+        <member name="E:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClientConnectionManager`1.PipeClientDisposed">
             <summary>
-            NLog implementation of logging.
+            Will be raised if the named pipe client has been disposed (due to an error).
             </summary>
         </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClient`1.#ctor">
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClientConnectionManager`1.#ctor">
             <summary>
             Initializes the class.
             </summary>
         </member>
-        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClient`1.TimeOutInMilliSeconds">
-            <summary>
-            The timeout for establishing a connection with the Data Connector.
-            If not set the default value DefaultTimeOutInMilliSeconds will be used.
-            </summary>
-        </member>
-        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClient`1.IsActive">
+        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClientConnectionManager`1.IsActive">
             <summary>
             Can be used to see if there already is a connection to the Data Connector. If so, do not try to connect again.
             </summary>
         </member>
-        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClient`1.DataConnectorStream">
+        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClientConnectionManager`1.DataConnectorStream">
             <summary>
             The underlying pipe stream for both the writer and the reader. Can and must be disposed.
             </summary>
         </member>
-        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClient`1.DataConnectorWriter">
+        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClientConnectionManager`1.DataConnectorWriter">
             <summary>
             The class that writes data over the pipe stream.  Can and must be disposed.
             </summary>
         </member>
-        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClient`1.DataConnectorReader">
+        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClientConnectionManager`1.DataConnectorReader">
             <summary>
             The class that reads data from the pipe stream.  Can and must be disposed.
             </summary>
         </member>
-        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClient`1.LoggingSource">
-            <summary>
-            The source for the logging: Client or Server, BCS or ScoringProgram.
-            </summary>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClient`1.ConnectAsync(System.String)">
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClientConnectionManager`1.ConnectAsync(System.String)">
             <summary>
             Connects to the specified named pipe asynchronously.
             </summary>
             <param name="pipeName">The name of the pipe to connect to.</param>
         </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClient`1.Connect(System.String)">
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClientConnectionManager`1.Connect(System.String)">
             <summary>
             Connects to the specified named pipe synchronously.
             </summary>
             <param name="pipeName">The name of the pipe to connect to.</param>
         </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClient`1.TryConnect">
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClientConnectionManager`1.TryConnect">
             <summary>
             Tries to connect twice synchronously. After that throws a <see cref="T:System.TimeoutException">TimeOutException</see>.
             </summary>
         </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClient`1.TryConnectAsync">
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClientConnectionManager`1.TryConnectAsync">
             <summary>
             Tries to connect twice asynchronously. After that throws a <see cref="T:System.TimeoutException">TimeOutException</see>.
             </summary>
         </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClient`1.CreateStreamReaderAndWriter">
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClientConnectionManager`1.CreateStreamReaderAndWriter">
             <summary>
             Creates the StreamReader and StreamReader classes based on the NamedPipeStream.
             </summary>
         </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClient`1.CloseWriter">
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClientConnectionManager`1.CloseWriter">
             <summary>
             Disposes of the StreamWriter class that sends messages to the DataConnector.
             </summary>
         </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClient`1.CloseReader">
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClientConnectionManager`1.CloseReader">
             <summary>
             Disposes of the StreamReader class that reads messages from the DataConnector.
             </summary>
         </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClient`1.CloseConnection">
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClientConnectionManager`1.CloseConnection">
             <summary>
             Disposes of the NamedPipeClientStream that channels messages to and from the DataConnector.
             </summary>
         </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClient`1.LogError(System.Exception)">
-            <summary>
-            Logs an error
-            </summary>
-            <param name="ex"></param>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClient`1.LogMethodEntry(System.String,System.ValueTuple{System.String,System.Object}[])">
-            <summary>
-            Logs the entry to a method with its parameters (if any),
-            </summary>
-            <param name="methodName"></param>
-            <param name="parameters"></param>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClient`1.LogMethodEntry(System.String)">
-            <summary>
-            Logs the entry to a method.
-            </summary>
-            <param name="entry"></param>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClient`1.Dispose(System.Boolean)">
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClientConnectionManager`1.Dispose(System.Boolean)">
             <summary>
             Disposes the stream, writer and reader for the DataConnector if disposing is not already in progress.
             </summary>
             <param name="disposing"></param>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClient`1.Dispose">
-            <summary>
-            Disposes the class.
-            </summary>
         </member>
         <member name="T:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorResponseData">
             <summary>
@@ -3155,6 +3373,587 @@
             Unknown error.
             </summary>
         </member>
+        <member name="T:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.IScoringProgramClient">
+            <summary>
+            Defines a common interface for the <see cref="T:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorPipeClient">ScoringProgramDataConnectorPipeClient</see> and the
+            <see cref="T:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorHttpClient">ScoringProgramDataConnectorHttpClient</see>.
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.IScoringProgramClient.IsActive">
+            <summary>
+            Signals if the client can be used.
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.IScoringProgramClient.IsSending">
+            <summary>
+            Signals that the client is sending and will not accept any new requests. Try again later.
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.IScoringProgramClient.LastHandrecordQueueItemId">
+            <summary>
+            The id of last handrecord queueitem that was retrieved.
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.IScoringProgramClient.LastParticipantQueueItemId">
+            <summary>
+            The id of last participant queueitem that was retrieved.
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.IScoringProgramClient.LastPlayerDataQueueItemId">
+            <summary>
+            The id of last player data queueitem that was retrieved.
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.IScoringProgramClient.LastResultQueueItemId">
+            <summary>
+            The id of last board result queueitem that was retrieved.
+            </summary>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.IScoringProgramClient.AcceptQueueData(System.String,BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorResponseData)">
+            <summary>
+            Synchronously accepts the eventqueue data of the given data type.
+            </summary>
+            <param name="sessionGuid"></param>
+            <param name="dataType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.IScoringProgramClient.AcceptQueueDataAsync(System.String,BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorResponseData)">
+            <summary>
+            Asynchronously accepts the eventqueue data of the given data type.
+            </summary>
+            <param name="sessionGuid"></param>
+            <param name="dataType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.IScoringProgramClient.AddSession(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.AddSessionDTO)">
+            <summary>
+            Synchronously adds the given session to an existing event.
+            </summary>
+            <param name="addedSession"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.IScoringProgramClient.AddSessionAsync(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.AddSessionDTO)">
+            <summary>
+            Asynchronously adds the given session to an existing event.
+            </summary>
+            <param name="addedSession"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.IScoringProgramClient.ClearData">
+            <summary>
+            Synchronously clears all dataconnector data for the club.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.IScoringProgramClient.ClearDataAsync">
+            <summary>
+            Asynchronously clears all dataconnector data for the club.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.IScoringProgramClient.Connect">
+            <summary>
+            Synchronously attempts to connect to the dataconnector.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.IScoringProgramClient.ConnectAsync">
+            <summary>
+            Asynchronously attempts to connect to the dataconnector.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.IScoringProgramClient.Continue(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.ContinueDTO)">
+            <summary>
+            Synchronously instructs BCS to continue administering an event it already knows.
+            </summary>
+            <param name="continueDTO"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.IScoringProgramClient.ContinueAsync(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.ContinueDTO)">
+            <summary>
+            Asynchronously instructs BCS to continue administering an event it already knows.
+            </summary>
+            <param name="continueDTO"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager">
+            <summary>
+            The client that communicates with the dataconnector used by the scoring program.
+            Defines the public interface that can be used to send and retrieve data to and from the dataconnector.
+            </summary>
+        </member>
+        <member name="F:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager._lastResultQueueItemId">
+            <summary>
+            Cached values of the ids of the several types of eventqueue items that have been sent to the Data Connector.
+            If the scoring program does not include the id of the last received queue item when accepting them,the cached values will be used.
+            </summary>      
+        </member>
+        <member name="F:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.ScoringProgramClientLogger">
+            <summary>
+            The logger for this class.
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.LoggingSource">
+            <summary>
+            The source of the logging records.
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.LastParticipantQueueItemId">
+            <summary>
+            The id of the last participant queue item downloaded from the Data Connector.
+            You can use this to internally accept this item (and all before of the same type).
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.LastPlayerDataQueueItemId">
+            <summary>
+            The id of the last player data queue item downloaded from the Data Connector.
+            You can use this to internally accept this item (and all before of the same type).
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.LastHandrecordQueueItemId">
+            <summary>
+            The id of the last handrecord queue item downloaded from the Data Connector.
+            You can use this to internally accept this item (and all before of the same type).
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.LastResultQueueItemId">
+            <summary>
+            The id of the last result queue item downloaded from the Data Connector.
+            You can use this to internally accept this item (and all before of the same type).
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.IsSending">
+            <summary>
+            Only one request can be sent at the same time. So let asynchronous code always check, set and reset this
+            property before, while and after sending a request. Feel free to make more nifty implementations.
+            </summary>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.LogError(System.Exception)">
+            <summary>
+            Logs an exception.
+            </summary>
+            <param name="ex"></param>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.LogMethodEntry(System.String)">
+            <summary>
+            Logs the entry to a method with its parameters (if any).
+            </summary>
+            <param name="entry"></param>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.PingAsync">
+            <summary>
+            Communicates to the Data Connector asynchronously to see if it is responsive.
+            This is done by sending a random piece of data and checking of the Data Connector returns it.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.Ping">
+            <summary>
+            Communicates to the Data Connector synchronously to see if it is responsive.
+            This is done by sending a random piece of data and checking of the Data Connector returns it.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.InitializeAsync(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.InitDTO)">
+            <summary>
+            Instructs BCS to create new sessions with the provided table domain data (scoring groups, sections, tables, rounds). 
+            Player names, Results and Handrecords can be included or can be uploaded later. The latter option is considerably less performant.
+            </summary>
+            <param name="initDTO">Carries the initialization data.</param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.Initialize(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.InitDTO)">
+            <summary>
+            Instructs BCS to create a new sessions with the provided table domain data (scoring groups, sections, tables, rounds). 
+            Player names, Results and Handrecords can be included or can be uploaded later. The latter option is considerably less performant.
+            </summary>
+            <param name="initDTO">Carries the initialization data.</param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.ContinueAsync(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.ContinueDTO)">
+            <summary>
+            Instructs BCS asynchronously to continue working with a previously created event.
+            </summary>
+            <param name="continueDTO">A DTO containing the guid for the event that must be administered again.</param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.Continue(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.ContinueDTO)">
+            <summary>
+            Instructs BCS  synchronously to continue working with a previously created event.
+            </summary>
+            <param name="continueDTO">A DTO containing the guid for the event that must be administered again.</param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.SendResultsAsync(System.String,BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.ResultDTO[])">
+            <summary>
+            Sends boardresults asynchronously to the BCS queue
+            </summary>
+            <param name="dtos"></param>
+            <param name="sessionGuid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.SendResults(System.String,BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.ResultDTO[])">
+            <summary>
+            Sends boardresults synchronously to the BCS queue
+            </summary>
+            <param name="dtos"></param>
+            <param name="sessionGuid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.SendHandrecordsAsync(System.String,BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.HandrecordDTO[])">
+            <summary>
+            Sends handrecords asynchronously to the BCS queue.
+            </summary>
+            <param name="sessionGuid"></param>
+            <param name="dtos"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.SendHandrecords(System.String,BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.HandrecordDTO[])">
+            <summary>
+            Sends handrecords synchronously to the BCS queue.
+            </summary>
+            <param name="sessionGuid"></param>
+            <param name="dtos"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.SendPlayerDataAsync(System.String,BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.PlayerDataDTO[])">
+            <summary>
+            Sends PlayerData asynchronously to the BCS queue.
+            </summary>
+            <param name="sessionGuid">The guid of the session that player participates in.</param>
+            <param name="playerData">a DTO containing the player data:playernumber, first name, last name, country code</param>
+            <returns></returns>
+            <remarks>
+            Best practice is to send all player data with the <see cref="T:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.InitDTO">InitDTO</see>. After the session starts
+            preferably the data is not changed to prevent unpredictable behaviour. By sending ParticipationDTOs, again preferable with the InitDTO,
+            you can specify which players start on which direction on which table.
+            If all players are known before the session starts only the corresponding player data of the participants of the session needs to be uploaded.
+            If players will make themselves known at session start-up by entering their playernumber on the Bridgemate then all 
+            playernumbers that could be entered should be uploaded using a PlayerDataDTO.
+            </remarks>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.SendPlayerData(System.String,BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.PlayerDataDTO[])">
+            <summary>
+            Sends PlayerData synchronously to the BCS queue.
+            </summary>
+            <param name="sessionGuid">The guid of the session that player participates in.</param>
+            <param name="playerData">a DTO containing the player data:playernumber, first name, last name, country code</param>
+            <returns></returns>
+            <remarks>
+            Best practice is to send all player data with the <see cref="T:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.InitDTO">InitDTO</see>. After the session starts
+            preferably the data is not changed to prevent unpredictable behaviour. By sending ParticipationDTOs, again preferable with the InitDTO,
+            you can specify which players start on which direction on which table.
+            If all players are known before the session starts only the corresponding player data of the participants of the session needs to be uploaded.
+            If players will make themselves known at session start-up by entering their playernumber on the Bridgemate then all 
+            playernumbers that could be entered should be uploaded using a PlayerDataDTO.
+            </remarks>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.SendParticipationsAsync(System.String,BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.ParticipationDTO[])">
+            <summary>
+            Sends participations asynchronously to the BCS queue.
+            </summary>
+            <param name="dtos"></param>
+            <param name="sessionGuid">The guid of the session that all participations must belong to.</param>
+            <returns></returns>
+            <remarks>
+            Participations can be sent in two ways:
+            1. Setting the SessionGuid and PlayerNumber property only. In this case a PlayerDataDTO with this SessionGuid-PlayerNumber must have been uploaded too.
+            2.Specifying the SessionGuid and at least the LastName property, but not the PlayerNumber. In this case no corresponding PlayerData having been sent
+            before is expected.
+            Setting both the PlayerNumber and LastName property will result in an error.
+            </remarks>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.SendParticipations(System.String,BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.ParticipationDTO[])">
+            <summary>
+            Sends participations asynchronously to the BCS queue.
+            </summary>
+            <param name="dtos"></param>
+            <param name="sessionGuid">The guid of the session that all participations must belong to.</param>
+            <returns></returns>
+            <remarks>
+            Participations can be sent in two ways:
+            1. Setting the SessionGuid and PlayerNumber property only. In this case a PlayerDataDTO with this SessionGuid-PlayerNumber must have been uploaded too.
+            2.Specifying the SessionGuid and at least the LastName property, but not the PlayerNumber. In this case no corresponding PlayerData having been sent
+            before is expected.
+            Setting both the PlayerNumber and LastName property will result in an error.
+            </remarks>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.SendBridgemate2SettingsAsync(System.String,BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.Bridgemate2SettingsDTO[])">
+            <summary>
+            Adds or updates the Bridgemate 2 settings for the given sections asynchronously. There can and must be one dto per section. 
+            The section letters cannot be left out.
+            </summary>
+            <param name="sessionGuid"></param>
+            <param name="bridgemate2Settings"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.SendBridgemate2Settings(System.String,BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.Bridgemate2SettingsDTO[])">
+            <summary>
+            Adds or updates the Bridgemate 2 settings for the given sections synchronously. There can and must be one dto per section. 
+            The section letters cannot be left out!
+            </summary>
+            <param name="sessionGuid"></param>
+            <param name="bridgemate2Settings"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.SendBridgemate3SettingsAsync(System.String,BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.Bridgemate3SettingsDTO[])">
+            <summary>
+            Adds or updates the Bridgemate 3 settings for the given sections asynchronously. There can and must be one dto per section. 
+            The section letters cannot be left out!
+            </summary>
+            <param name="sessionGuid"></param>
+            <param name="bridgemate3Settings"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.SendBridgemate3Settings(System.String,BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.Bridgemate3SettingsDTO[])">
+            <summary>
+            Adds or updates the Bridgemate 3 settings for the given sections synchronously. There can and must be one dto per section. 
+            The section letters cannot be left out!
+            </summary>
+            <param name="sessionGuid"></param>
+            <param name="bridgemate3Settings"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.SendDataAsync(System.String,BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorCommands,System.String,System.String)">
+            <summary>
+            The code that handles the actual sending of requests and reading their reponses aynchronously.
+            </summary>
+            <param name="sessionGuid">Specifies which session the request targets (if any)</param>
+            <param name="command">The command to the Data Connector</param>
+            <param name="serializedData">The data to send to the Data Connector as json data. (If any)</param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.SendData(System.String,BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorCommands,System.String,System.String)">
+            <summary>
+            The code that handles the actual sending of requests and reading their reponses aynchronously.
+            </summary>
+            <param name="sessionGuid">Specifies which session the request targets (if any)</param>
+            <param name="command">The command to the Data Connector</param>
+            <param name="serializedData">The data to send to the Data Connector as json data. (If any)</param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.PollForResultsAsync(System.String,System.Boolean)">
+            <summary>
+            Polls the client queue for new boardresults asynchronously.
+            <param name="sessionGuid">Required. The guid of the session to poll participations for.</param>
+            <param name="all">Poll all results for the session, included ones polled before.</param>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.PollForResults(System.String,System.Boolean)">
+            <summary>
+            Polls the client queue for new boardresults synchronously.
+            <param name="sessionGuid">Required. The guid of the session to poll participations for.</param>
+            <param name="all">Poll all results for the session, included ones polled before.</param>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.PollForPlayerDataAsync(System.String,System.Boolean)">
+            <summary>
+            Polls the client queue asynchronously for new player data for the specified session.
+            </summary>
+            <param name="sessionGuid">Required. The guid of the session to poll participations for.</param>
+            <param name="all">Poll all player data for the session, included ones polled before.</param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.PollForPlayerData(System.String,System.Boolean)">
+            <summary>
+            Polls the client queue asynchronously for new player data for the specified session.
+            </summary>
+            <param name="sessionGuid">Required. The guid of the session to poll participations for.</param>
+            <param name="all">Poll all player data for the session, included ones polled before.</param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.PollForParticipationsAsync(System.String,System.Boolean)">
+            <summary>
+            Polls the client queue asynchronously for new participations for the specified session.
+            </summary>
+            <param name="sessionGuid">Required. The guid of the session to poll participations for.</param>
+            <param name="all">Poll all participations for the session, included ones polled before.</param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.PollForParticipations(System.String,System.Boolean)">
+            <summary>
+            Polls the client queue synchronously for new participations for the specified session.
+            </summary>
+            <param name="sessionGuid">Required. The guid of the session to poll participations for.</param>
+            <param name="all">Poll all participations for the session, included ones polled before.</param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.PollForHandrecordsAsync(System.String,System.Boolean)">
+            <summary>
+            Polls the Data Connector asynchronously for new handrecords for the session,
+            </summary>
+            <param name="sessionGuid">Required. The guid of the session to poll handrecords for.</param>
+            <param name="all">Poll all handrecords for the session, included ones polled before.</param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.PollForHandrecords(System.String,System.Boolean)">
+            <summary>
+            Polls the Data Connector synchronously for new handrecords for the session,
+            </summary>
+            <param name="sessionGuid">Required. The guid of the session to poll handrecords for.</param>
+            <param name="all">Poll all handrecords for the session, included ones polled before.</param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.AcceptQueueData(System.String,BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorResponseData)">
+            <summary>
+            Signals to the Data Connector synchronously that a specific type of queuedata up to the specified id does not need to be sent again.
+            </summary>
+            <param name="sessionGuid">The guid of the session to accept the specific eventqueue data for.</param>
+            <param name="dataType">The type of eventqueue data to accept (results, handrecords, participations, etc.).</param>
+            <returns></returns>
+            <remarks>
+            The Data Connector requires an id of the last downloaded eventqueue item of the given type. These id's are stored
+            as fields in this class. You can also choose to make the last eventqueue id (for the given type!) a parameter of this method.
+            </remarks>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.AcceptQueueDataAsync(System.String,BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorResponseData)">
+            <summary>
+            Signals to the Data Connector asynchronously that a specific type of queuedata up to the specified id does not need to be sent again.
+            </summary>
+            <param name="sessionGuid">The guid of the session to accept the specific eventqueue data for.</param>
+            <param name="dataType">The type of eventqueue data to accept (results, handrecords, participations, etc.).</param>
+            <returns></returns>
+            <remarks>
+            The Data Connector requires an id of the last downloaded eventqueue item of the given type. These id's are stored
+            as fields in this class. You can also choose to make the last eventqueue id (for the given type!) a parameter of this method.
+            </remarks>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.DetermineParametersForQueuAcceptance(BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorResponseData)">
+            <summary>
+            Determines which command to sent to the Data Connector and which last queue item id to use.
+            </summary>
+            <param name="dataType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.GetMovementAsync(System.String,System.String)">
+            <summary>
+            Returns the movement asynchronously for the given section as it is in use by BCS.Mind that the Data Connector itself creates updates to 
+            enact movement changes.
+            </summary>
+            <param name="sessionGuid">The guid of the session to get the movements from.</param>
+            <param name="sectionLetters">The letters of the section to get the movements from.</param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.GetMovement(System.String,System.String)">
+            <summary>
+            Returns the movement for the given section synchronously as it is in use by BCS.Mind that the Data Connector itself creates updates to 
+            enact movement changes.
+            </summary>
+            <param name="sessionGuid">The guid of the session to get the movement from</param>
+            <param name="sectionLetters">The letters of the section to get the movement from</param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.GetAllMovementsAsync(System.String)">
+            <summary>
+            Returns the movements asynchronously for the given session as they are in use by BCS.Mind that the Data Connector itself creates updates to 
+            enact movement changes.
+            </summary>
+            <param name="sessionGuid">The guid of the session to get all movements from</param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.GetAllMovements(System.String)">
+            <summary>
+            Returns the movements synchronously for the given session as they are in use by BCS.Mind that the Data Connector itself creates updates to 
+            enact movement changes.
+            </summary>
+            <param name="sessionGuid">The guid of the session to get all movements from</param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.UpdateScoringGroupsAsync(System.Collections.Generic.IEnumerable{BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.ScoringGroupDTO})">
+            <summary>
+            Instructs BCS asynchronously to update the scoringgroups. This can be done to change the scoring method or to rearrange the sections that are attached to them.
+            </summary>
+            <param name="scoringGroups">The scoringgroups to update</param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.UpdateScoringGroups(System.Collections.Generic.IEnumerable{BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.ScoringGroupDTO})">
+            <summary>
+            Instructs BCS synchronously to update the scoringgroups. This can be done to change the scoring method or to rearrange the sections that are attached to them.
+            </summary>
+            <param name="scoringGroups">the scoringgroups to update</param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.UpdateMovementAsync(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SectionUpdateDTO)">
+            <summary>
+            Instructs BCS asynchronously to update the movement for the given section. Be sure to include the movement for the section after its change.
+            BCS will figure out how to adjust its data to enact the change.
+            Mind that board results will be erased for each table starting from the lowest numbered round with different round data.
+            </summary>
+            <param name="updatedSection">The section with its tables and rounds as they are after the update.</param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.UpdateMovement(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SectionUpdateDTO)">
+            <summary>
+            Instructs BCS synchronously to update the movement for the given section. Be sure to include the movement for the section after its change.
+            BCS will figure out how to adjust its data to enact the change.
+            Mind that board results will be erased for each table starting from the lowest numbered round with different round data.
+            </summary>
+            <param name="updatedSection">The section with its tables and rounds as they are after the update.</param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.AddSessionAsync(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.AddSessionDTO)">
+            <summary>
+            Adds the given session to a known event asynchronously.
+            This event must have been sent to the Data Connector previously using an <see cref="T:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.InitDTO">InitDTO</see>.
+            </summary>
+            <param name="addedSession"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.AddSession(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.AddSessionDTO)">
+            <summary>
+            Adds the given session to a known event synchronously.
+            This event must have been sent to the Data Connector previously using an <see cref="T:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.InitDTO">InitDTO</see>.
+            </summary>
+            <param name="addedSession"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.IssueManagementCommandAsync(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.BCSManagementRequestDTO)">
+            <summary>
+            Issue a management command to BCS asynchronously. This command can either be a query for information on the location of its scoring file, which sessions
+            it is currently administering or which sessions are known to it, or it can be an instruction to shut down.
+            </summary>
+            <param name="managementDTO">The carrier of the managment command.</param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.IssueManagementCommand(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.BCSManagementRequestDTO)">
+            <summary>
+            Issue a management command to BCS synchronously. This command can either be a query for information on the location of its scoring file, which sessions
+            it is currently administering or which sessions are know to it, or it can be an instruction to shut down.
+            </summary>
+            <param name="managementDTO">The carrier of the management command</param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.DoesSessionExistAsync(System.String)">
+            <summary>
+            Does an asynchronous check on if the session with the given guid exists.
+            </summary>
+            <param name="sessionGuid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.DoesSessionExist(System.String)">
+            <summary>
+            Does an synchronous check on if the session with the given guid exists.
+            </summary>
+            <param name="sessionGuid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.ClearDataAsync">
+            <summary>
+            Instructs the DataConnector to asynchronously clear all incoming and outgoing queuedata and to remove al validation data as well.
+            Use with caution!
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.ClearData">
+            <summary>
+            Instructs the DataConnector to synchronously clear all incoming and outgoing queuedata and to remove al validation data as well.
+            Use with caution!
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorCommands">
             <summary>
             These enum values comprise the command values that can be set on the <see cref="T:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramRequest">ScoringProgramRequest</see>'s Command property.
@@ -3346,134 +4145,126 @@
             Not supported
             </summary>
         </member>
-        <member name="T:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramHttpClient">
+        <member name="T:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorHttpClient">
             <summary>
-            WARN: Currently not supported.
-            Uses the Http protocol to communicate with the Data Connector.
+            Exchanges information with the dataconnector using http.
             </summary>
         </member>
-        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramHttpClient.LastParticipantQueueItemId">
+        <member name="F:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorHttpClient.ProductionUrlWithouProtocol">
             <summary>
-            The id of the last participant queue item downloaded from the Data Connector.
-            You can use this to internally accept this item (and all before of the same type).
+            The url for the webservice without the http:// prefix.
             </summary>
         </member>
-        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramHttpClient.LastHandrecordQueueItemId">
+        <member name="F:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorHttpClient.ProductionUrl">
             <summary>
-            The id of the last handrecord queue item downloaded from the Data Connector.
-            You can use this to internally accept this item (and all before of the same type).
+            The full url for the webservice.
             </summary>
         </member>
-        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramHttpClient.LastResultQueueItemId">
+        <member name="F:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorHttpClient.LocalHostUrlWithoutProtocol">
             <summary>
-            The id of the last result queue item downloaded from the Data Connector.
-            You can use this to internally accept this item (and all before of the same type).
+            The url for the local host hosted webservice without the http:// prefix.
+            Used for debugging only.
             </summary>
         </member>
-        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramHttpClient.IsSending">
+        <member name="F:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorHttpClient.LocalHostUrl">
             <summary>
-            Only one request can be sent at the same time. So let asynchronous code always check, set and reset this
-            property before, while and after sending a request. Feel free to make more nifty implementations.
+            The full url for the local host hosted webservice.
+            Used for debugging only.
             </summary>
         </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramHttpClient.Ping">
+        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorHttpClient.UseLocalHost">
             <summary>
-            Communicates to the Data Connector to see if it is responsive.
+            If set to true will make the client communicate with the local host hosted webservice.
+            Used for debugging only.
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorHttpClient.ApiUrlRoot">
+            <summary>
+            Constructs the full url for the webservice based on whether it is hosted in local host or in the cloud.
+            </summary>
+        </member>
+        <member name="F:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorHttpClient.ApiUrlRootWihtoutProtocol">
+            <summary>
+            Constructs the url for the webservice without the http:// prefix based on whether it is hosted in local host or in the cloud.
+            </summary>
+        </member>
+        <member name="F:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorHttpClient.ApiCall">
+            <summary>
+            The url to call when the scoring program communicates with the data connector.
+            </summary>
+        </member>
+        <member name="F:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorHttpClient.ApiPingResponse">
+            <summary>
+            Part of the expected response from the webservice when sending a Get httprequest to it.
+            </summary>
+        </member>
+        <member name="F:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorHttpClient.DebugLogger">
+            <summary>
+            The debug logger
+            </summary>
+        </member>
+        <member name="F:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorHttpClient.ErrorLogger">
+            <summary>
+            The error logger
+            </summary>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorHttpClient.Instance(System.String,System.String)">
+            <summary>
+            Returns the singleton instance of the client with its ClubdId and LicenceKey properties set to the values of the parameters.
+            </summary>
+            <param name="clubId">The id of the club that is using the client</param>
+            <param name="licenceKey">The licence key for the club using the client</param>
+            <returns></returns>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorHttpClient.Credentials">
+            <summary>
+            The information needed to get access to the http channel for the data communicator.
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorHttpClient.IsActive">
+            <summary>
+            Always returns true.
+            </summary>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorHttpClient.Connect">
+            <summary>
+            Checks if the endpoint can be reached by sending a ping request to it.
             </summary>
             <returns></returns>
         </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramHttpClient.InitiaLizeAsync(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.InitDTO)">
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorHttpClient.ConnectAsync">
             <summary>
-            Instructs BCS to create a new scoring file with the provided table domain data (scoring groups, sections, tables, rounds). 
-            Player names, Results and Handrecords can be included or can be uploaded later. The latter option is considerably less performant.
+            Checks if the endpoint can be reached by sending a ping request to it.
             </summary>
-            <param name="sessionGraph"></param>
             <returns></returns>
         </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramHttpClient.ContinueAsync(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.ContinueDTO)">
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorHttpClient.Connect(System.String)">
             <summary>
-            Instructs BCS to continue working a previously created scoring file.
+            Not implemented for http.
             </summary>
-            <param name="continueDTO">A DTO containing the session guid for the file to be revived.</param>
+            <param name="connectionName"></param>
             <returns></returns>
         </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramHttpClient.SendResultsAsync(System.String,BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.ResultDTO[])">
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorHttpClient.ConnectAsync(System.String)">
             <summary>
-            Sends boardresults to the BCS queue
+            Not implemented for http.
             </summary>
-            <param name="dtos"></param>
-            <param name="sessionGuid"></param>
+            <param name="connectionName"></param>
             <returns></returns>
         </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramHttpClient.SendHandrecordsAsync(System.String,BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.HandrecordDTO[])">
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorHttpClient.DisconnectAsync">
             <summary>
-            Sends handrecords to the BCS queue.
+            Not implemented for http.
             </summary>
-            <param name="sessionGuid"></param>
-            <param name="dtos"></param>
             <returns></returns>
         </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramHttpClient.SendPlayerDataAsync(System.String,BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.PlayerDataDTO[])">
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorHttpClient.Disconnect">
             <summary>
-            Sends PlayerData to the BCS queue.
+            Not implemented for http.
             </summary>
-            <param name="organizationId">The organization that gives out the playernumbers</param>
-            <param name="playerData">a DTO containing the player data:playernumber, first name, last name, country code</param>
-            <returns></returns>
-            <remarks>
-            Best practice is to send all player data first, even before initializing the session. After the session starts
-            preferably the data is not changed to prevent unpredictable behaviour. By sending ParticipationDTOs you can specify
-            which players start on which direction on which table.
-            If all players are known before the session starts only the participants of the session need to be uploaded.
-            If players will make themselves known at session start-up by entering their playernumber on the Bridgemate then all 
-            playernumbers that could be entered should be uploaded.
-            </remarks>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramHttpClient.SendParticipationsAsync(System.String,BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.ParticipationDTO[])">
-            <summary>
-            Sends participations to the BCS queue.
-            </summary>
-            <param name="dtos"></param>
-            <param name="sessionGuid">The guid of the session that all participations must belong to.</param>
-            <returns></returns>
-            <remarks>
-            Best practice is to send PlayerNumbers only. For this to work the PlayerDataDTOs have to be sent beforehand.
-            </remarks>
-        </member>
-        <!-- Badly formed XML comment ignored for member "M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramHttpClient.PollForResultsAsync(System.String,System.Boolean)" -->
-        <!-- Badly formed XML comment ignored for member "M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramHttpClient.PollForParticipationsAsync(System.String,System.Boolean)" -->
-        <!-- Badly formed XML comment ignored for member "M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramHttpClient.PollForHandrecordsAsync(System.String,System.Boolean)" -->
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramHttpClient.AcceptQueueDataAsync(System.String,BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorResponseData)">
-            <summary>
-            Signals to the Data Connector that a specific type of queuedata up to the specified id does not need to be sent again.
-            </summary>
-            <param name="sessionGuid"></param>
-            <param name="dataType"></param>
-            <param name="upToId"></param>
-            <returns></returns>
-            <remarks>
-            The Data Connector requires an id of the last downloaded eventqueu item of the given type. These id's are stored
-            as fields in this class. You can also choose to make the last eventqueue id (for the given type!) a parameter of this method.
-            </remarks>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramHttpClient.GetMovementAsync(System.String,System.String)">
-            <summary>
-            Returns the movement for the given section as it is in use by BCS. This data can be used to create movement updates.
-            </summary>
-            <param name="sessionGuid"></param>
-            <param name="sectionLetters"></param>
             <returns></returns>
         </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramHttpClient.SendDataAsync(System.String,BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorCommands,System.String)">
-            <summary>
-            Checks if the connection has been established after a Connect command.
-            </summary>
-            <param name="command">The command that will be executed by the calling code it the connection is alive.
-                                  Is passed only for logging purposes.</param>
-            <returns>A Clientresponse when there is an error, null otherwise.</returns>
-            <remarks>
-            Alternatively the Ping command can be used to check the connection before sending a request.
-            </remarks>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorHttpClient.SendDataAsync(System.String,BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorCommands,System.String,System.String)">
             <summary>
             The code that handles the actual sending of requests and reading their reponses.
             </summary>
@@ -3482,10 +4273,20 @@
             <param name="serializedData">The data to send to the Data Connector as json data. (If any)</param>
             <returns></returns>
         </member>
-        <member name="T:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient">
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorHttpClient.SendData(System.String,BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorCommands,System.String,System.String)">
+            <summary>
+            The code that handles the actual sending of requests and reading their reponses.
+            </summary>
+            <param name="sessionGuid">Specifies which session the request targets (if any)</param>
+            <param name="command">The command to the middlleman</param>
+            <param name="serializedData">The data to send to the Data Connector as json data. (If any)</param>
+            <returns></returns>
+        </member>
+        <member name="T:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorPipeClient">
             <summary>
             Handles request from the scoring programs. This code is freely available for external programmers to adapt to their
-            specific needs. This code, however, is guaranteed to work. Interop options are available for many programming languages.
+            specific needs. This code, however, is guaranteed to work. Interop options are available for many programming languages 
+            that can interface with .Net Standard 2.0 assemblies.
             <br/>
             Note that this class is written as a singleton: there should never be more than one instance communicating over the pipe. 
             The constructor is protected however, so by inheriting from this class a non singleton instance can be used.
@@ -3499,290 +4300,75 @@
             All public functions have synchronous and asynchronous implementations (ending in "Async").
             <br/>
             To get started inspect the following functions:<br/>
-            <see cref="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.Connect">Connect</see> and <see cref="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.ConnectAsync">ConnectAsync</see>: Connection to the Data Connector.<br/>
-            <see cref="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.Initialize(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.InitDTO)">Initialize</see> and <see cref="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.InitializeAsync(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.InitDTO)">InitializeAsync</see>: Initialization of a new event. <br/>
-            <see cref="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.IssueManagementCommand(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.BCSManagementRequestDTO)">IssueManagementCommand</see> and <see cref="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.IssueManagementCommandAsync(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.BCSManagementRequestDTO)">IssueManagementCommandAsync</see>: Query the Bridgemate Control Software.
+            <see cref="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorPipeClient.Connect">Connect</see> and <see cref="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorPipeClient.ConnectAsync">ConnectAsync</see>: Connection to the Data Connector.<br/>
+            <see cref="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.Initialize(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.InitDTO)">Initialize</see> and <see cref="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.InitializeAsync(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.InitDTO)">InitializeAsync</see>: Initialization of a new event. <br/>
+            <see cref="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.IssueManagementCommand(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.BCSManagementRequestDTO)">IssueManagementCommand</see> and <see cref="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorClientCommandManager.IssueManagementCommandAsync(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.BCSManagementRequestDTO)">IssueManagementCommandAsync</see>: Query the Bridgemate Control Software.
             </summary>
         </member>
-        <member name="F:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient._lastResultQueueItemId">
-            <summary>
-            Cached values of the ids of the several types of eventqueue items that have been sent to the Data Connector.
-            If the scoring program does not include the id of the last received queue item when accepting them,the cached values will be used.
-            </summary>      
-        </member>
-        <member name="F:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.ScoringProgramClientLogger">
-            <summary>
-            The logger for this class.
-            </summary>
-        </member>
-        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.LoggingSource">
-            <summary>
-            The source of the logging records.
-            </summary>
-        </member>
-        <member name="F:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.PipeName">
+        <member name="F:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorPipeClient.PipeName">
             <summary>
             The name of the pipe that handles the bidirectional communication with the Data Connector.
             Each Windows account must have its own pipe, hence the username of the logged in user (as Windows knows it) is appended.
             Tip: you can find the usernames as Windows knows them by going to the C:\Users folder.
             </summary>
         </member>
-        <member name="F:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient._instance">
+        <member name="F:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorPipeClient._instance">
             <summary>
             The implementation of the singleton pattern. Atypically the constructor is protected rather than private.
             </summary>
         </member>
-        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.Instance">
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorPipeClient.Instance">
             <summary>
             The single instance of the pipe client. Use this property to retrieve the client and use it in the external program.
             </summary>
         </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.#ctor">
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorPipeClient.#ctor">
             <summary>
             Initializes the class.
             </summary>
         </member>
-        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.LastParticipantQueueItemId">
+        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorPipeClient.IsActive">
             <summary>
-            The id of the last participant queue item downloaded from the Data Connector.
-            You can use this to internally accept this item (and all before of the same type).
+            Can be used to see if there already is a connection to the Data Connector. If so, do not try to connect again.
             </summary>
         </member>
-        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.LastPlayerDataQueueItemId">
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorPipeClient.Connect(System.String)">
             <summary>
-            The id of the last player data queue item downloaded from the Data Connector.
-            You can use this to internally accept this item (and all before of the same type).
+            Connects to the specified named pipe synchronously.
             </summary>
+            <param name="pipeName">The name of the pipe to connect to.</param>
         </member>
-        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.LastHandrecordQueueItemId">
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorPipeClient.ConnectAsync(System.String)">
             <summary>
-            The id of the last handrecord queue item downloaded from the Data Connector.
-            You can use this to internally accept this item (and all before of the same type).
+            Connects to the specified named pipe synchronously.
             </summary>
+            <param name="pipeName">The name of the pipe to connect to.</param>
         </member>
-        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.LastResultQueueItemId">
-            <summary>
-            The id of the last result queue item downloaded from the Data Connector.
-            You can use this to internally accept this item (and all before of the same type).
-            </summary>
-        </member>
-        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.IsSending">
-            <summary>
-            Only one request can be sent at the same time. So let asynchronous code always check, set and reset this
-            property before, while and after sending a request. Feel free to make more nifty implementations.
-            </summary>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.LogError(System.Exception)">
-            <summary>
-            Logs an exception.
-            </summary>
-            <param name="ex"></param>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.LogMethodEntry(System.String)">
-            <summary>
-            Logs the entry to a method with its parameters (if any).
-            </summary>
-            <param name="entry"></param>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.ConnectAsync">
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorPipeClient.ConnectAsync">
             <summary>
             Connect to the Data Connector asynchronously.
             </summary>
             <returns></returns>
         </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.Connect">
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorPipeClient.Connect">
             <summary>
             Connect to the Data Connector synchronously
             </summary>
             <returns></returns>
         </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.DisconnectAsync">
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorPipeClient.DisconnectAsync">
             <summary>
             Disconnects from the Data Connector asynchronously, causing the Data Connector to close the pipe and reopen it.
             </summary>
             <returns></returns>
         </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.Disconnect">
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorPipeClient.Disconnect">
             <summary>
             Disconnects from the Data Connector synchronously, causing the Data Connector to close the pipe and reopen it.
             </summary>
             <returns></returns>
         </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.PingAsync">
-            <summary>
-            Communicates to the Data Connector asynchronously to see if it is responsive.
-            This is done by sending a random piece of data and checking of the Data Connector returns it.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.Ping">
-            <summary>
-            Communicates to the Data Connector synchronously to see if it is responsive.
-            This is done by sending a random piece of data and checking of the Data Connector returns it.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.InitializeAsync(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.InitDTO)">
-            <summary>
-            Instructs BCS to create new sessions with the provided table domain data (scoring groups, sections, tables, rounds). 
-            Player names, Results and Handrecords can be included or can be uploaded later. The latter option is considerably less performant.
-            </summary>
-            <param name="initDTO">Carries the initialization data.</param>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.Initialize(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.InitDTO)">
-            <summary>
-            Instructs BCS to create a new sessions with the provided table domain data (scoring groups, sections, tables, rounds). 
-            Player names, Results and Handrecords can be included or can be uploaded later. The latter option is considerably less performant.
-            </summary>
-            <param name="initDTO">Carries the initialization data.</param>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.ContinueAsync(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.ContinueDTO)">
-            <summary>
-            Instructs BCS asynchronously to continue working with a previously created event.
-            </summary>
-            <param name="continueDTO">A DTO containing the guid for the event that must be administered again.</param>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.Continue(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.ContinueDTO)">
-            <summary>
-            Instructs BCS  synchronously to continue working with a previously created event.
-            </summary>
-            <param name="continueDTO">A DTO containing the guid for the event that must be administered again.</param>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.SendResultsAsync(System.String,BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.ResultDTO[])">
-            <summary>
-            Sends boardresults asynchronously to the BCS queue
-            </summary>
-            <param name="dtos"></param>
-            <param name="sessionGuid"></param>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.SendResults(System.String,BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.ResultDTO[])">
-            <summary>
-            Sends boardresults synchronously to the BCS queue
-            </summary>
-            <param name="dtos"></param>
-            <param name="sessionGuid"></param>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.SendHandrecordsAsync(System.String,BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.HandrecordDTO[])">
-            <summary>
-            Sends handrecords asynchronously to the BCS queue.
-            </summary>
-            <param name="sessionGuid"></param>
-            <param name="dtos"></param>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.SendHandrecords(System.String,BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.HandrecordDTO[])">
-            <summary>
-            Sends handrecords synchronously to the BCS queue.
-            </summary>
-            <param name="sessionGuid"></param>
-            <param name="dtos"></param>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.SendPlayerDataAsync(System.String,BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.PlayerDataDTO[])">
-            <summary>
-            Sends PlayerData asynchronously to the BCS queue.
-            </summary>
-            <param name="sessionGuid">The guid of the session that player participates in.</param>
-            <param name="playerData">a DTO containing the player data:playernumber, first name, last name, country code</param>
-            <returns></returns>
-            <remarks>
-            Best practice is to send all player data with the <see cref="T:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.InitDTO">InitDTO</see>. After the session starts
-            preferably the data is not changed to prevent unpredictable behaviour. By sending ParticipationDTOs, again preferable with the InitDTO,
-            you can specify which players start on which direction on which table.
-            If all players are known before the session starts only the corresponding player data of the participants of the session needs to be uploaded.
-            If players will make themselves known at session start-up by entering their playernumber on the Bridgemate then all 
-            playernumbers that could be entered should be uploaded using a PlayerDataDTO.
-            </remarks>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.SendPlayerData(System.String,BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.PlayerDataDTO[])">
-            <summary>
-            Sends PlayerData synchronously to the BCS queue.
-            </summary>
-            <param name="sessionGuid">The guid of the session that player participates in.</param>
-            <param name="playerData">a DTO containing the player data:playernumber, first name, last name, country code</param>
-            <returns></returns>
-            <remarks>
-            Best practice is to send all player data with the <see cref="T:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.InitDTO">InitDTO</see>. After the session starts
-            preferably the data is not changed to prevent unpredictable behaviour. By sending ParticipationDTOs, again preferable with the InitDTO,
-            you can specify which players start on which direction on which table.
-            If all players are known before the session starts only the corresponding player data of the participants of the session needs to be uploaded.
-            If players will make themselves known at session start-up by entering their playernumber on the Bridgemate then all 
-            playernumbers that could be entered should be uploaded using a PlayerDataDTO.
-            </remarks>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.SendParticipationsAsync(System.String,BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.ParticipationDTO[])">
-            <summary>
-            Sends participations asynchronously to the BCS queue.
-            </summary>
-            <param name="dtos"></param>
-            <param name="sessionGuid">The guid of the session that all participations must belong to.</param>
-            <returns></returns>
-            <remarks>
-            Participations can be sent in two ways:
-            1. Setting the SessionGuid and PlayerNumber property only. In this case a PlayerDataDTO with this SessionGuid-PlayerNumber must have been uploaded too.
-            2.Specifying the SessionGuid and at least the LastName property, but not the PlayerNumber. In this case no corresponding PlayerData having been sent
-            before is expected.
-            Setting both the PlayerNumber and LastName property will result in an error.
-            </remarks>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.SendParticipations(System.String,BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.ParticipationDTO[])">
-            <summary>
-            Sends participations asynchronously to the BCS queue.
-            </summary>
-            <param name="dtos"></param>
-            <param name="sessionGuid">The guid of the session that all participations must belong to.</param>
-            <returns></returns>
-            <remarks>
-            Participations can be sent in two ways:
-            1. Setting the SessionGuid and PlayerNumber property only. In this case a PlayerDataDTO with this SessionGuid-PlayerNumber must have been uploaded too.
-            2.Specifying the SessionGuid and at least the LastName property, but not the PlayerNumber. In this case no corresponding PlayerData having been sent
-            before is expected.
-            Setting both the PlayerNumber and LastName property will result in an error.
-            </remarks>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.SendBridgemate2SettingsAsync(System.String,BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.Bridgemate2SettingsDTO[])">
-            <summary>
-            Adds or updates the Bridgemate 2 settings for the given sections asynchronously. There can and must be one dto per section. 
-            The section letters cannot be left out.
-            </summary>
-            <param name="sessionGuid"></param>
-            <param name="bridgemate2Settings"></param>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.SendBridgemate2Settings(System.String,BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.Bridgemate2SettingsDTO[])">
-            <summary>
-            Adds or updates the Bridgemate 2 settings for the given sections synchronously. There can and must be one dto per section. 
-            The section letters cannot be left out!
-            </summary>
-            <param name="sessionGuid"></param>
-            <param name="bridgemate2Settings"></param>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.SendBridgemate3SettingsAsync(System.String,BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.Bridgemate3SettingsDTO[])">
-            <summary>
-            Adds or updates the Bridgemate 3 settings for the given sections asynchronously. There can and must be one dto per section. 
-            The section letters cannot be left out!
-            </summary>
-            <param name="sessionGuid"></param>
-            <param name="bridgemate3Settings"></param>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.SendBridgemate3Settings(System.String,BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.Bridgemate3SettingsDTO[])">
-            <summary>
-            Adds or updates the Bridgemate 3 settings for the given sections synchronously. There can and must be one dto per section. 
-            The section letters cannot be left out!
-            </summary>
-            <param name="sessionGuid"></param>
-            <param name="bridgemate3Settings"></param>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.SendDataAsync(System.String,BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorCommands,System.String)">
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorPipeClient.SendDataAsync(System.String,BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorCommands,System.String,System.String)">
             <summary>
             The code that handles the actual sending of requests and reading their reponses aynchronously.
             </summary>
@@ -3791,237 +4377,7 @@
             <param name="serializedData">The data to send to the Data Connector as json data. (If any)</param>
             <returns></returns>
         </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.SendData(System.String,BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorCommands,System.String)">
-            <summary>
-            The code that handles the actual sending of requests and reading their reponses aynchronously.
-            </summary>
-            <param name="sessionGuid">Specifies which session the request targets (if any)</param>
-            <param name="command">The command to the Data Connector</param>
-            <param name="serializedData">The data to send to the Data Connector as json data. (If any)</param>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.PollForResultsAsync(System.String,System.Boolean)">
-            <summary>
-            Polls the client queue for new boardresults asynchronously.
-            <param name="sessionGuid">Required. The guid of the session to poll participations for.</param>
-            <param name="all">Poll all results for the session, included ones polled before.</param>
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.PollForResults(System.String,System.Boolean)">
-            <summary>
-            Polls the client queue for new boardresults synchronously.
-            <param name="sessionGuid">Required. The guid of the session to poll participations for.</param>
-            <param name="all">Poll all results for the session, included ones polled before.</param>
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.PollForPlayerDataAsync(System.String,System.Boolean)">
-            <summary>
-            Polls the client queue asynchronously for new player data for the specified session.
-            </summary>
-            <param name="sessionGuid">Required. The guid of the session to poll participations for.</param>
-            <param name="all">Poll all player data for the session, included ones polled before.</param>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.PollForPlayerData(System.String,System.Boolean)">
-            <summary>
-            Polls the client queue asynchronously for new player data for the specified session.
-            </summary>
-            <param name="sessionGuid">Required. The guid of the session to poll participations for.</param>
-            <param name="all">Poll all player data for the session, included ones polled before.</param>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.PollForParticipationsAsync(System.String,System.Boolean)">
-            <summary>
-            Polls the client queue asynchronously for new participations for the specified session.
-            </summary>
-            <param name="sessionGuid">Required. The guid of the session to poll participations for.</param>
-            <param name="all">Poll all participations for the session, included ones polled before.</param>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.PollForParticipations(System.String,System.Boolean)">
-            <summary>
-            Polls the client queue synchronously for new participations for the specified session.
-            </summary>
-            <param name="sessionGuid">Required. The guid of the session to poll participations for.</param>
-            <param name="all">Poll all participations for the session, included ones polled before.</param>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.PollForHandrecordsAsync(System.String,System.Boolean)">
-            <summary>
-            Polls the Data Connector asynchronously for new handrecords for the session,
-            </summary>
-            <param name="sessionGuid">Required. The guid of the session to poll handrecords for.</param>
-            <param name="all">Poll all handrecords for the session, included ones polled before.</param>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.PollForHandrecords(System.String,System.Boolean)">
-            <summary>
-            Polls the Data Connector synchronously for new handrecords for the session,
-            </summary>
-            <param name="sessionGuid">Required. The guid of the session to poll handrecords for.</param>
-            <param name="all">Poll all handrecords for the session, included ones polled before.</param>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.AcceptQueueData(System.String,BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorResponseData)">
-            <summary>
-            Signals to the Data Connector synchronously that a specific type of queuedata up to the specified id does not need to be sent again.
-            </summary>
-            <param name="sessionGuid">The guid of the session to accept the specific eventqueue data for.</param>
-            <param name="dataType">The type of eventqueue data to accept (results, handrecords, participations, etc.).</param>
-            <returns></returns>
-            <remarks>
-            The Data Connector requires an id of the last downloaded eventqueue item of the given type. These id's are stored
-            as fields in this class. You can also choose to make the last eventqueue id (for the given type!) a parameter of this method.
-            </remarks>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.AcceptQueueDataAsync(System.String,BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorResponseData)">
-            <summary>
-            Signals to the Data Connector asynchronously that a specific type of queuedata up to the specified id does not need to be sent again.
-            </summary>
-            <param name="sessionGuid">The guid of the session to accept the specific eventqueue data for.</param>
-            <param name="dataType">The type of eventqueue data to accept (results, handrecords, participations, etc.).</param>
-            <returns></returns>
-            <remarks>
-            The Data Connector requires an id of the last downloaded eventqueue item of the given type. These id's are stored
-            as fields in this class. You can also choose to make the last eventqueue id (for the given type!) a parameter of this method.
-            </remarks>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.DetermineParametersForQueuAcceptance(BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorResponseData)">
-            <summary>
-            Determines which command to sent to the Data Connector and which last queue item id to use.
-            </summary>
-            <param name="dataType"></param>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.GetMovementAsync(System.String,System.String)">
-            <summary>
-            Returns the movement asynchronously for the given section as it is in use by BCS.Mind that the Data Connector itself creates updates to 
-            enact movement changes.
-            </summary>
-            <param name="sessionGuid">The guid of the session to get the movements from.</param>
-            <param name="sectionLetters">The letters of the section to get the movements from.</param>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.GetMovement(System.String,System.String)">
-            <summary>
-            Returns the movement for the given section synchronously as it is in use by BCS.Mind that the Data Connector itself creates updates to 
-            enact movement changes.
-            </summary>
-            <param name="sessionGuid">The guid of the session to get the movement from</param>
-            <param name="sectionLetters">The letters of the section to get the movement from</param>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.GetAllMovementsAsync(System.String)">
-            <summary>
-            Returns the movements asynchronously for the given session as they are in use by BCS.Mind that the Data Connector itself creates updates to 
-            enact movement changes.
-            </summary>
-            <param name="sessionGuid">The guid of the session to get all movements from</param>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.GetAllMovements(System.String)">
-            <summary>
-            Returns the movements synchronously for the given session as they are in use by BCS.Mind that the Data Connector itself creates updates to 
-            enact movement changes.
-            </summary>
-            <param name="sessionGuid">The guid of the session to get all movements from</param>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.UpdateScoringGroupsAsync(System.Collections.Generic.IEnumerable{BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.ScoringGroupDTO})">
-            <summary>
-            Instructs BCS asynchronously to update the scoringgroups. This can be done to change the scoring method or to rearrange the sections that are attached to them.
-            </summary>
-            <param name="scoringGroups">The scoringgroups to update</param>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.UpdateScoringGroups(System.Collections.Generic.IEnumerable{BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.ScoringGroupDTO})">
-            <summary>
-            Instructs BCS synchronously to update the scoringgroups. This can be done to change the scoring method or to rearrange the sections that are attached to them.
-            </summary>
-            <param name="scoringGroups">the scoringgroups to update</param>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.UpdateMovementAsync(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SectionUpdateDTO)">
-            <summary>
-            Instructs BCS asynchronously to update the movement for the given section. Be sure to include the movement for the section after its change.
-            BCS will figure out how to adjust its data to enact the change.
-            Mind that board results will be erased for each table starting from the lowest numbered round with different round data.
-            </summary>
-            <param name="updatedSection">The section with its tables and rounds as they are after the update.</param>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.UpdateMovement(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SectionUpdateDTO)">
-            <summary>
-            Instructs BCS synchronously to update the movement for the given section. Be sure to include the movement for the section after its change.
-            BCS will figure out how to adjust its data to enact the change.
-            Mind that board results will be erased for each table starting from the lowest numbered round with different round data.
-            </summary>
-            <param name="updatedSection">The section with its tables and rounds as they are after the update.</param>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.AddSessionAsync(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SessionDTO)">
-            <summary>
-            Adds the given session to a known event asynchronously.
-            This event must have been sent to the Data Connector previously using an <see cref="T:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.InitDTO">InitDTO</see>.
-            </summary>
-            <param name="addedSession"></param>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.AddSession(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.SessionDTO)">
-            <summary>
-            Adds the given session to a known event synchronously.
-            This event must have been sent to the Data Connector previously using an <see cref="T:BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.InitDTO">InitDTO</see>.
-            </summary>
-            <param name="addedSession"></param>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.IssueManagementCommandAsync(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.BCSManagementRequestDTO)">
-            <summary>
-            Issue a management command to BCS asynchronously. This command can either be a query for information on the location of its scoring file, which sessions
-            it is currently administering or which sessions are known to it, or it can be an instruction to shut down.
-            </summary>
-            <param name="managementDTO">The carrier of the managment command.</param>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.IssueManagementCommand(BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO.BCSManagementRequestDTO)">
-            <summary>
-            Issue a management command to BCS synchronously. This command can either be a query for information on the location of its scoring file, which sessions
-            it is currently administering or which sessions are know to it, or it can be an instruction to shut down.
-            </summary>
-            <param name="managementDTO">The carrier of the management command</param>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.DoesSessionExistAsync(System.String)">
-            <summary>
-            Does an asynchronous check on if the session with the given guid exists.
-            </summary>
-            <param name="sessionGuid"></param>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.DoesSessionExist(System.String)">
-            <summary>
-            Does an synchronous check on if the session with the given guid exists.
-            </summary>
-            <param name="sessionGuid"></param>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.ClearDataAsync">
-            <summary>
-            Instructs the DataConnector to asynchronously clear all incoming and outgoing queuedata and to remove al validation data as well.
-            Use with caution!
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.ClearData">
-            <summary>
-            Instructs the DataConnector to synchronously clear all incoming and outgoing queuedata and to remove al validation data as well.
-            Use with caution!
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.CheckConnection(BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorCommands)">
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorPipeClient.CheckConnection(BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorCommands)">
             <summary>
             Checks if the connection has been established after a Connect command.
             </summary>
@@ -4032,11 +4388,47 @@
             Alternatively the Ping command can be used to check the connection before sending a request.
             </remarks>
         </member>
-        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramPipeClient.Dispose(System.Boolean)">
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorPipeClient.Dispose(System.Boolean)">
             <summary>
             Disposes the class.
             </summary>
             <param name="disposing"></param>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorPipeClient.SendData(System.String,BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorCommands,System.String,System.String)">
+            <summary>
+            The code that handles the actual sending of requests and reading their reponses aynchronously.
+            </summary>
+            <param name="sessionGuid">Specifies which session the request targets (if any)</param>
+            <param name="command">The command to the Data Connector</param>
+            <param name="serializedData">The data to send to the Data Connector as json data. (If any)</param>
+            <returns></returns>
+        </member>
+        <member name="T:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorPipeClientConnectionManager">
+            <summary>
+            Handles connections to the dataconnector for scoring programs.
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorPipeClientConnectionManager.LoggingSource">
+            <summary>
+            Returns the logging source.
+            </summary>
+        </member>
+        <member name="F:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorPipeClientConnectionManager.ScoringProgramClientLogger">
+            <summary>
+            The logger.
+            </summary>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorPipeClientConnectionManager.LogError(System.Exception)">
+            <summary>
+            Logs an exception.
+            </summary>
+            <param name="ex"></param>
+        </member>
+        <member name="M:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramDataConnectorPipeClientConnectionManager.LogMethodEntry(System.String)">
+            <summary>
+            Logs entry of a method.
+            </summary>
+            <param name="entry"></param>
         </member>
         <member name="T:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramRequest">
             <summary>
@@ -4051,6 +4443,16 @@
         <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramRequest.Command">
             <summary>
             Required. The command that the Data Connector must pass on to BCS.
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramRequest.ClubId">
+            <summary>
+            Required when using the http interface for the dataconnector
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramRequest.LicenceKey">
+            <summary>
+            Required when using the http interface for the dataconnector
             </summary>
         </member>
         <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.ScoringProgramRequest.SessionGuid">
