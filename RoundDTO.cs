@@ -155,6 +155,10 @@ namespace BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO
             {
                 validationMessages.Add($"{nameof(RoundNumber)} ({RoundNumber}) must be greater than zero.");
             }
+            if ((PairNS == 0 || PairEW == 0) && (LowBoardNumber>0 || HighBoardNumber>0)) 
+            {
+                validationMessages.Add($"No boards may be specified for a sit-out round or an empty round.");
+            }
             ValidationMessages=validationMessages.ToArray();
             return !ValidationMessages.Any();
         }
