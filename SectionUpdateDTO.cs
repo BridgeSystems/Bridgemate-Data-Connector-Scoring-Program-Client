@@ -106,6 +106,7 @@ namespace BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO
         /// Optional. A pair that is missing throughout the movement. Alternatively this can be specified by
         /// Leaving out the opponent for a pair that would have met the missing pair. However, BCS will be able
         /// to discern a sit-out table from an empty table if this value is used.
+        /// When using a two winner movement a positive number denotes a missing NS pair, a negative value denotes a missing EW pair.
         /// </summary>
         public int MissingPair
         {
@@ -251,9 +252,9 @@ namespace BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO
             {
                 validationMessages.Add($"Invalid {nameof(ScoringGroupScoringMethod)} ({ScoringGroupScoringMethod}). The value must be a multiple of 10 between 10 and 70 or 51. ");
             }
-            if (MissingPair < 0)
+            if (MissingPair < 0 && Winners != 2)
             {
-                validationMessages.Add($"{nameof(MissingPair)} ({MissingPair}) must at least zero.");
+                validationMessages.Add($"{nameof(MissingPair)} ({MissingPair}) must at least be zero for a one winner section.");
             }
             if (Winners < 1 || Winners > 2)
             {
