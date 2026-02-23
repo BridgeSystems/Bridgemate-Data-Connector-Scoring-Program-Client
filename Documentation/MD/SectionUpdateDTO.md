@@ -48,6 +48,8 @@ Currently not supported.
 
 Optional. If specified it will indicate the number for the pair that is not playing. Its opponents will have a sit-out when they are scheduled to play against this pair. This value can&nbsp; be omitted as a sit-out can also be specified on the RoundDTOs. However, if used the graphic representation of sit-out tables in BCS will be improved.
 
+**Note:** For a two winner section a positive number denotes the missing NS pair, a negative value denotes the missing EW pair.
+
 ##### IsCombiSection property
 
 Optional. If "true" the section will host the two pairs that would have otherwise have a sit-out in their own sections. Specify the section that will provide the NorthSouth pair and the section that will provide the EastWest pair.
