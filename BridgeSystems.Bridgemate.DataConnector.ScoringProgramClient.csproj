@@ -1,44 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<TargetFramework>netstandard2.0</TargetFramework>
-		<Version>5.0.1015.0</Version>
-		<FileVersion>5.0.1015.0</FileVersion>
-		<GenerateDocumentationFile>True</GenerateDocumentationFile>
-		<BaseOutputPath>C:\Users\Andre\source\repos\BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient\bin</BaseOutputPath>
-		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-	</PropertyGroup>
-	<ItemGroup>
-		<Compile Remove="Scoring Program Client Documentation\**" />
-		<EmbeddedResource Remove="Scoring Program Client Documentation\**" />
-		<None Remove="Scoring Program Client Documentation\**" />
-	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
-		<PackageReference Include="NLog" Version="6.0.5" />
-		<PackageReference Include="System.Text.Json" Version="9.0.10" />
-	</ItemGroup>
-	<ItemGroup>
-		<Folder Include="Documentation\MD\" />
-		<Folder Include="Dll\" />
-	</ItemGroup>
-	<Target Name="PostBuildCopy"
-        AfterTargets="Build"
-        Condition="'$(Configuration)' == 'Release'">
-
-		<PropertyGroup>
-			<DestinationFolder>$(ProjectDir)Dll\</DestinationFolder>
-		</PropertyGroup>
-
-		<MakeDir Directories="$(DestinationFolder)" />
-
-		<ItemGroup>
-			<BuiltFiles Include="$(OutputPath)**\*.*" />
-		</ItemGroup>
-
-		<Copy
-		  SourceFiles="@(BuiltFiles)"
-		  DestinationFiles="@(BuiltFiles->'$(DestinationFolder)%(RecursiveDir)%(Filename)%(Extension)')"
-		  SkipUnchangedFiles="true" />
-	</Target>
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>5.0.1016.0</Version>
+    <FileVersion>5.0.1016.0</FileVersion>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <BaseOutputPath>C:\Users\Andre\source\repos\BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient\bin</BaseOutputPath>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Scoring Program Client Documentation\**" />
+    <EmbeddedResource Remove="Scoring Program Client Documentation\**" />
+    <None Remove="Scoring Program Client Documentation\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
+    <PackageReference Include="NLog" Version="6.0.5" />
+    <PackageReference Include="System.Text.Json" Version="9.0.10" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Documentation\MD\" />
+    <Folder Include="Dll\" />
+  </ItemGroup>
+  <Target Name="PostBuildCopy" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
+    <PropertyGroup>
+      <DestinationFolder>$(ProjectDir)Dll\</DestinationFolder>
+    </PropertyGroup>
+    <MakeDir Directories="$(DestinationFolder)" />
+    <ItemGroup>
+      <BuiltFiles Include="$(OutputPath)**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(BuiltFiles)" DestinationFiles="@(BuiltFiles-&gt;'$(DestinationFolder)%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+  </Target>
 </Project>
