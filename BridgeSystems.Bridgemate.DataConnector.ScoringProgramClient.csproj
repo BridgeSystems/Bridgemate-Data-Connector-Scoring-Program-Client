@@ -5,7 +5,6 @@
     <Version>5.0.1016.0</Version>
     <FileVersion>5.0.1016.0</FileVersion>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <BaseOutputPath>C:\Users\Andre\source\repos\BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient\bin</BaseOutputPath>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
   <ItemGroup>
