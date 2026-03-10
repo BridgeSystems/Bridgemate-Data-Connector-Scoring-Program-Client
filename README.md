@@ -21,4 +21,4 @@ Help documents that describe en detail how to connect to and communicate with th
 A help file that describes the methods and properties of the scoring program client provided by Bridge Systems BV.
 1. Html: [Data Connector context sensitive help ](https://bridgesystems.github.io/Bridgemate-Data-Connector-Scoring-Program-Client/html/b11ca58b-c149-48f8-af9a-cf6a2c7bfe53.htm)
 
-As of March 10th 2026, this repository has been moved from "bridgesystemsbv" to "BridgeSystems".
+As of March 10th 2026, this repository has been moved from "bridgesystemsbv" to "BridgeSystems"!
