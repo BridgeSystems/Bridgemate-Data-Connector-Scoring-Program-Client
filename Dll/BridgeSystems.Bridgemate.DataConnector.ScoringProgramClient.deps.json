@@ -7,7 +7,7 @@
   "targets": {
     ".NETStandard,Version=v2.0": {},
     ".NETStandard,Version=v2.0/": {
-      "BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient/5.0.1016.0": {
+      "BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient/5.0.1017.0": {
         "dependencies": {
           "Microsoft.Win32.Registry": "5.0.0",
           "NETStandard.Library": "2.0.3",
@@ -170,7 +170,7 @@
     }
   },
   "libraries": {
-    "BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient/5.0.1016.0": {
+    "BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient/5.0.1017.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
