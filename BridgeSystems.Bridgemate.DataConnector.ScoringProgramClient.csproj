@@ -15,7 +15,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
     <PackageReference Include="NLog" Version="6.0.5" />
-    <PackageReference Include="System.Text.Json" Version="9.0.10" />
+    <PackageReference Include="System.Text.Json" Version="10.0.5" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Documentation\MD\" />
@@ -29,6 +29,6 @@
     <ItemGroup>
       <BuiltFiles Include="$(OutputPath)**\*.*" />
     </ItemGroup>
-    <Copy SourceFiles="@(BuiltFiles)" DestinationFiles="@(BuiltFiles-&gt;'$(DestinationFolder)%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(BuiltFiles)" DestinationFiles="@(BuiltFiles->'$(DestinationFolder)%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
   </Target>
 </Project>
