@@ -2799,7 +2799,7 @@
         </member>
         <member name="F:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorClientCommandManager`1.DataConnectorClientLogger">
             <summary>
-            NLog implementation of logging.
+            Structured logger for DataConnector actions.
             </summary>
         </member>
         <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorClientCommandManager`1.IsActive">
@@ -3070,6 +3070,20 @@
             <param name="source"></param>
             <param name="parameters"></param>
             <returns></returns>
+        </member>
+        <member name="T:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorLogging">
+            <summary>
+            Central logging configuration for the DataConnector library.
+            Set the <see cref="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorLogging.LoggerFactory"/> property to enable logging with the framework of your choice (NLog, Serilog, etc.).
+            If not set, logging is silently disabled.
+            </summary>
+        </member>
+        <member name="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorLogging.LoggerFactory">
+            <summary>
+            The logger factory used to create loggers throughout the library.
+            Defaults to <see cref="F:Microsoft.Extensions.Logging.Abstractions.NullLoggerFactory.Instance"/> (no-op).
+            Set this to your own <see cref="T:Microsoft.Extensions.Logging.ILoggerFactory"/> to enable logging.
+            </summary>
         </member>
         <member name="T:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorPipeClientConnectionManager`1">
             <summary>
@@ -4294,8 +4308,8 @@
             The class implements IDisposable through its base class, as the base class contains a stream writer and stream reader that must be disposed
             when the communication shuts down. Be sure to call Dispose on the class any time it is no longer in use, otherwise communication will stall.
             <br/>
-            The code has no dependencies, except one on NLog (and Net Standard 2.0). If you decide to copy the code make sure to add a dependency to the NLog NuGet package
-            or implement your own logging.
+            The code has no dependencies except on Microsoft.Extensions.Logging.Abstractions (and .NET Standard 2.0).
+            To enable logging, set <see cref="P:BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnectorLogging.LoggerFactory"/> to your own ILoggerFactory instance.
             <br/>
             All public functions have synchronous and asynchronous implementations (ending in "Async").
             <br/>

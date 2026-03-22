@@ -1,4 +1,4 @@
-﻿using NLog;
+﻿using Microsoft.Extensions.Logging;
 using System;
 
 namespace BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient
@@ -16,7 +16,7 @@ namespace BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient
         /// <summary>
         /// The logger.
         /// </summary>
-        public static readonly Logger ScoringProgramClientLogger = LogManager.GetLogger(nameof(ScoringProgramClientLogger));
+        public static readonly ILogger ScoringProgramClientLogger = DataConnectorLogging.LoggerFactory.CreateLogger(nameof(ScoringProgramClientLogger));
 
         /// <summary>
         /// Logs an exception.
@@ -24,7 +24,7 @@ namespace BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient
         /// <param name="ex"></param>
         protected override void LogError(Exception ex)
         {
-            ScoringProgramClientLogger.Error(ex);
+            ScoringProgramClientLogger.LogError(ex, ex.Message);
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient
         /// <param name="entry"></param>
         protected override void LogMethodEntry(string entry)
         {
-            ScoringProgramClientLogger.Debug(entry);
+            ScoringProgramClientLogger.LogDebug(entry);
         }
     }
 }

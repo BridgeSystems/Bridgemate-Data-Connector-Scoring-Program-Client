@@ -6,6 +6,25 @@
     <FileVersion>5.0.1017.0</FileVersion>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+
+    <!-- NuGet package metadata -->
+    <PackageId>BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient</PackageId>
+    <Authors>Bridge Systems BV</Authors>
+    <Company>Bridge Systems BV</Company>
+    <Product>Bridgemate Data Connector Scoring Program Client</Product>
+    <Description>Client library for scoring programs to communicate with the Bridgemate Data Connector.</Description>
+    <Copyright>Copyright (c) Bridge Systems BV</Copyright>
+    <PackageLicenseExpression>LGPL-3.0-only</PackageLicenseExpression>
+    <PackageReadme>README.md</PackageReadme>
+    <RepositoryUrl>https://github.com/bridgesystems/Bridgemate-Data-Connector-Scoring-Program-Client</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+
+    <!-- Debugging / symbol package -->
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Scoring Program Client Documentation\**" />
@@ -14,8 +33,11 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
-    <PackageReference Include="NLog" Version="6.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
     <PackageReference Include="System.Text.Json" Version="10.0.5" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Documentation\MD\" />

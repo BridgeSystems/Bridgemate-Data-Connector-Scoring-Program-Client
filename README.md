@@ -7,8 +7,21 @@ In this repository you will find the documentation on how to write a client your
 In the [Scoring Program Emulator folder](https://github.com/bridgesystems/Bridgemate-Data-Connector-Scoring-Program-Client/tree/master/Scoring%20Program%20Emulator) you will find a zipped Visual Studio 2022 project that demonstrates how to use the ScoringProgramClient. Be free to use and adapt this to learn and test how to use the ScoringProgramClient for communication with the Bridgemate Data Connector. Redistribution of this code is not allowed.
 
 ## The compiled libraries
-The compiled libraries can be found in the Dll folder. The client resides in the BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.dll, but it has dependencies on NLog and on some other .Net components. 
-Make sure to copy all *.dll files. The .pdb file can be useful when debugging. The .deps file may make it possible that the dlls other than the main one do not need to be copied. This may be the case when the programming environment can parse it and knows where to find the dependencies.
+The client is available as a NuGet package from GitHub Packages. To install, add the Bridge Systems package source and install the package:
+```
+dotnet nuget add source "https://nuget.pkg.github.com/bridgesystems/index.json" --name bridgesystems
+dotnet add package BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient
+```
+A symbol package (.snupkg) is included for debugging support.
+
+Alternatively, the compiled libraries can be found in the Dll folder. Make sure to copy all *.dll files. The .pdb file can be useful when debugging. The .deps file may make it possible that the dlls other than the main one do not need to be copied. This may be the case when the programming environment can parse it and knows where to find the dependencies.
+
+### Logging
+The library uses `Microsoft.Extensions.Logging.Abstractions` so you can plug in any logging framework (NLog, Serilog, etc.). To enable logging, set the logger factory before using the client:
+```csharp
+DataConnectorLogging.LoggerFactory = yourLoggerFactory;
+```
+If not set, logging is silently disabled.
 
 ## Documentation
 There are two main sources of documentation:

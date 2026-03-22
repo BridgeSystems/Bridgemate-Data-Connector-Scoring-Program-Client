@@ -1,5 +1,5 @@
 ﻿using BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient;
-using NLog;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Net.Http;
 using System.Net.NetworkInformation;
@@ -66,13 +66,13 @@ namespace BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient
         /// <summary>
         /// The debug logger
         /// </summary>
-        protected static readonly Logger DebugLogger = LogManager.GetLogger(nameof(DebugLogger));
+        protected static readonly ILogger DebugLogger = DataConnectorLogging.LoggerFactory.CreateLogger(nameof(DebugLogger));
 
         /// <summary>
         /// The error logger
         /// </summary>
-        protected static readonly Logger ErrorLogger = LogManager.GetLogger(nameof(ErrorLogger));
-        private static readonly Logger Logger = LogManager.GetLogger(nameof(ScoringProgramDataConnectorHttpClient));
+        protected static readonly ILogger ErrorLogger = DataConnectorLogging.LoggerFactory.CreateLogger(nameof(ErrorLogger));
+        private static readonly ILogger Logger = DataConnectorLogging.LoggerFactory.CreateLogger(nameof(ScoringProgramDataConnectorHttpClient));
 
         private static ScoringProgramDataConnectorHttpClient _instance;
         
@@ -113,7 +113,7 @@ namespace BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient
                 }
                 catch (HttpRequestException ex)
                 {
-                    Logger.Error(ex);
+                    Logger.LogError(ex, ex.Message);
                     success = false;
                     responseMessage = ex.Message;
                 }
@@ -278,7 +278,7 @@ public (string clubId, string licenceKey) Credentials { get; set; }
                         }
                         catch (Exception ex)
                         {
-                            Logger.Error(ex);
+                            Logger.LogError(ex, ex.Message);
                             retryCounter--;
                             await Task.Delay(1000 - retryCounter * 200);
                         }
@@ -302,7 +302,7 @@ public (string clubId, string licenceKey) Credentials { get; set; }
                             {
                                 retryCounter--;
                                 var errorMessage = httpResponse.ReasonPhrase;
-                                Logger.Error(errorMessage);
+                                Logger.LogError(errorMessage);
                                 await Task.Delay(1000 - retryCounter * 200);
                             }
                         }
@@ -317,8 +317,8 @@ public (string clubId, string licenceKey) Credentials { get; set; }
             }
             catch (Exception ex)
             {
-                DebugLogger.Error(ex);
-                ErrorLogger.Error(ex);
+                DebugLogger.LogError(ex, ex.Message);
+                ErrorLogger.LogError(ex, ex.Message);
                 return
                 new ScoringProgramResponse
                 {
@@ -394,7 +394,7 @@ public (string clubId, string licenceKey) Credentials { get; set; }
                         }
                         catch (Exception ex)
                         {
-                            Logger.Error(ex);
+                            Logger.LogError(ex, ex.Message);
                             retryCounter--;
                             Thread.Sleep(10000 - retryCounter * 200);
                         }
@@ -418,7 +418,7 @@ public (string clubId, string licenceKey) Credentials { get; set; }
                             {
                                 retryCounter--;
                                 var errorMessage = httpResponse.ReasonPhrase;
-                                Logger.Error(errorMessage);
+                                Logger.LogError(errorMessage);
                                 Thread.Sleep(10000 - retryCounter * 200);
                             }
                         }
@@ -433,8 +433,8 @@ public (string clubId, string licenceKey) Credentials { get; set; }
             }
             catch (Exception ex)
             {
-                DebugLogger.Error(ex);
-                ErrorLogger.Error(ex);
+                DebugLogger.LogError(ex, ex.Message);
+                ErrorLogger.LogError(ex, ex.Message);
                 return
                 new ScoringProgramResponse
                 {

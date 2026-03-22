@@ -9,8 +9,8 @@
     ".NETStandard,Version=v2.0/": {
       "BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient/5.0.1017.0": {
         "dependencies": {
+          "Microsoft.Extensions.Logging.Abstractions": "6.0.0",
           "Microsoft.Win32.Registry": "5.0.0",
-          "NLog": "6.1.1",
           "System.Text.Json": "10.0.5"
         },
         "runtime": {
@@ -28,6 +28,18 @@
           }
         }
       },
+      "Microsoft.Extensions.Logging.Abstractions/6.0.0": {
+        "dependencies": {
+          "System.Buffers": "4.6.1",
+          "System.Memory": "4.6.3"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.0.21.52210"
+          }
+        }
+      },
       "Microsoft.Win32.Registry/5.0.0": {
         "dependencies": {
           "System.Buffers": "4.6.1",
@@ -39,14 +51,6 @@
           "lib/netstandard2.0/Microsoft.Win32.Registry.dll": {
             "assemblyVersion": "5.0.0.0",
             "fileVersion": "5.0.20.51904"
-          }
-        }
-      },
-      "NLog/6.1.1": {
-        "runtime": {
-          "lib/netstandard2.0/NLog.dll": {
-            "assemblyVersion": "6.0.0.0",
-            "fileVersion": "6.1.1.5033"
           }
         }
       },
@@ -175,19 +179,19 @@
       "path": "microsoft.bcl.asyncinterfaces/10.0.5",
       "hashPath": "microsoft.bcl.asyncinterfaces.10.0.5.nupkg.sha512"
     },
+    "Microsoft.Extensions.Logging.Abstractions/6.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/HggWBbTwy8TgebGSX5DBZ24ndhzi93sHUBDvP1IxbZD7FDokYzdAr6+vbWGjw2XAfR2EJ1sfKUotpjHnFWPxA==",
+      "path": "microsoft.extensions.logging.abstractions/6.0.0",
+      "hashPath": "microsoft.extensions.logging.abstractions.6.0.0.nupkg.sha512"
+    },
     "Microsoft.Win32.Registry/5.0.0": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-dDoKi0PnDz31yAyETfRntsLArTlVAVzUzCIvvEDsDsucrl33Dl8pIJG06ePTJTI3tGpeyHS9Cq7Foc/s4EeKcg==",
       "path": "microsoft.win32.registry/5.0.0",
       "hashPath": "microsoft.win32.registry.5.0.0.nupkg.sha512"
-    },
-    "NLog/6.1.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-TCIwfAQX2IpZDnqs/+c5jCPnveCG8M6/wFmUk2odjRl0xiocfe4B+4qIvRbVbazSxcS28+Zu14pFeRJE9yAQAQ==",
-      "path": "nlog/6.1.1",
-      "hashPath": "nlog.6.1.1.nupkg.sha512"
     },
     "System.Buffers/4.6.1": {
       "type": "package",

@@ -21,8 +21,8 @@ namespace BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient
     /// The class implements IDisposable through its base class, as the base class contains a stream writer and stream reader that must be disposed
     /// when the communication shuts down. Be sure to call Dispose on the class any time it is no longer in use, otherwise communication will stall.
     /// <br/>
-    /// The code has no dependencies, except one on NLog (and Net Standard 2.0). If you decide to copy the code make sure to add a dependency to the NLog NuGet package
-    /// or implement your own logging.
+    /// The code has no dependencies except on Microsoft.Extensions.Logging.Abstractions (and .NET Standard 2.0).
+    /// To enable logging, set <see cref="DataConnectorLogging.LoggerFactory"/> to your own ILoggerFactory instance.
     /// <br/>
     /// All public functions have synchronous and asynchronous implementations (ending in "Async").
     /// <br/>

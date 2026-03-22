@@ -19,7 +19,7 @@ namespace BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient
         /// </summary>
         public static int DefaultTimeOutInMilliSeconds = 5000;
         /// <summary>
-        /// NLog implementation of logging.
+        /// Structured logger for DataConnector actions.
         /// </summary>
         public DataConnectorLogCreator<TCommand> DataConnectorClientLogger = new DataConnectorLogCreator<TCommand>(jsonDataLogLevel: DataConnectorLogLevel.Debug, nameof(DataConnectorClientLogger));
 

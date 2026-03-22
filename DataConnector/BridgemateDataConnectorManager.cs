@@ -7,15 +7,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Diagnostics;
+using Microsoft.Extensions.Logging;
 using Microsoft.Win32;
-using NLog;
 
 namespace BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnector
 {
 
     public static class BridgemateDataConnectorManager
     {
-        private static Logger Logger = LogManager.GetCurrentClassLogger();
+        private static ILogger Logger = DataConnectorLogging.LoggerFactory.CreateLogger(nameof(BridgemateDataConnectorManager));
 
         /// <summary>
         /// The name of the executable of the Bridgemate DataConnectorService
@@ -70,7 +70,7 @@ namespace BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.DataConnec
             }
             catch (Exception ex)
             {
-                Logger.Error(ex);
+                Logger.LogError(ex, ex.Message);
                 return false;
             }
         }

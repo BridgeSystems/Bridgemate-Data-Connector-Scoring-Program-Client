@@ -1,4 +1,4 @@
-﻿using NLog;
+﻿using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -192,7 +192,7 @@ namespace BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient
 
         private readonly DataConnectorLogLevel _jsonDataLogLevel;
 
-        private readonly Logger _nLogLogger;
+        private readonly ILogger _logger;
 
         /// <summary>
         /// Initializes the logger.
@@ -202,7 +202,7 @@ namespace BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient
         public DataConnectorLogCreator(DataConnectorLogLevel jsonDataLogLevel, string name)
         {
             _jsonDataLogLevel = jsonDataLogLevel;
-            _nLogLogger=LogManager.GetLogger(name);
+            _logger = DataConnectorLogging.LoggerFactory.CreateLogger(name);
         }
 
         /// <summary>
@@ -211,13 +211,13 @@ namespace BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient
         /// <param name="record"></param>
         public void LogRecord(DataConnectorLogRecord record)
         {
-            //return;
+            var logLevel = ToMicrosoftLogLevel(record.LogLevel);
             var message = $"{record.Source,-20} {record.Command,-20} {record.Remark}";
-            _nLogLogger.Log(ToNLogLogLevel(record.LogLevel), message);
+            _logger.Log(logLevel, message);
             if (!string.IsNullOrEmpty(record.JsonData) && _jsonDataLogLevel <= record.LogLevel)
-                _nLogLogger.Log(ToNLogLogLevel(record.LogLevel), DataConnectorLogRecord.HumanReadableJson(record.JsonData));
+                _logger.Log(logLevel, DataConnectorLogRecord.HumanReadableJson(record.JsonData));
             if (record.Exception != null)
-                _nLogLogger.Log(LogLevel.Error, record.Exception);
+                _logger.Log(Microsoft.Extensions.Logging.LogLevel.Error, record.Exception, record.Exception.Message);
         }
 
         /// <summary>
@@ -312,24 +312,24 @@ namespace BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient
 
         }
 
-        private LogLevel ToNLogLogLevel(DataConnectorLogLevel dataConnectorLogLevel)
+        private Microsoft.Extensions.Logging.LogLevel ToMicrosoftLogLevel(DataConnectorLogLevel dataConnectorLogLevel)
         {
             switch (dataConnectorLogLevel)
             {
                 case DataConnectorLogLevel.NotSet:
-                    return LogLevel.Info;
+                    return Microsoft.Extensions.Logging.LogLevel.Information;
                 case DataConnectorLogLevel.Trace:
-                    return LogLevel.Trace;
+                    return Microsoft.Extensions.Logging.LogLevel.Trace;
                 case DataConnectorLogLevel.Debug:
-                    return LogLevel.Debug;
+                    return Microsoft.Extensions.Logging.LogLevel.Debug;
                 case DataConnectorLogLevel.Info:
-                    return LogLevel.Info;
+                    return Microsoft.Extensions.Logging.LogLevel.Information;
                 case DataConnectorLogLevel.Warn:
-                    return LogLevel.Warn;
+                    return Microsoft.Extensions.Logging.LogLevel.Warning;
                 case DataConnectorLogLevel.Exception:
-                    return LogLevel.Error;
+                    return Microsoft.Extensions.Logging.LogLevel.Error;
                 default:
-                    return LogLevel.Info;
+                    return Microsoft.Extensions.Logging.LogLevel.Information;
             }
         }
 
