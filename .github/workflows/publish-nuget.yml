@@ -7,9 +7,6 @@ on:
 jobs:
   publish:
     runs-on: windows-latest
-    permissions:
-      packages: write
-      contents: read
 
     steps:
       - uses: actions/checkout@v4
@@ -28,11 +25,9 @@ jobs:
       - name: Pack
         run: dotnet pack -c Release --no-build --output nupkg
 
-      - name: Push to GitHub Packages
+      - name: Push to NuGet.org
         shell: pwsh
         run: |
           foreach ($pkg in Get-ChildItem -Path nupkg -Filter *.nupkg) {
-            dotnet nuget push $pkg.FullName --source "https://nuget.pkg.github.com/bridgesystems/index.json" --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
+            dotnet nuget push $pkg.FullName --source "https://api.nuget.org/v3/index.json" --api-key ${{ secrets.NUGET_API_KEY }} --skip-duplicate
           }
-        env:
-          DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER: 0
