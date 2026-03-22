@@ -7,9 +7,8 @@ In this repository you will find the documentation on how to write a client your
 In the [Scoring Program Emulator folder](https://github.com/bridgesystems/Bridgemate-Data-Connector-Scoring-Program-Client/tree/master/Scoring%20Program%20Emulator) you will find a zipped Visual Studio 2022 project that demonstrates how to use the ScoringProgramClient. Be free to use and adapt this to learn and test how to use the ScoringProgramClient for communication with the Bridgemate Data Connector. Redistribution of this code is not allowed.
 
 ## The compiled libraries
-The client is available as a NuGet package from GitHub Packages. To install, add the Bridge Systems package source and install the package:
+The client is available as a NuGet package on [nuget.org](https://www.nuget.org/packages/BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient). To install:
 ```
-dotnet nuget add source "https://nuget.pkg.github.com/bridgesystems/index.json" --name bridgesystems
 dotnet add package BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient
 ```
 A symbol package (.snupkg) is included for debugging support.
