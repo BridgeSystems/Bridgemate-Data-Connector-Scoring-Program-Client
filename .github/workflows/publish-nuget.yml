@@ -24,15 +24,20 @@ jobs:
         shell: pwsh
         run: |
           $csproj = "BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.csproj"
-          $xml = [xml](Get-Content $csproj)
-          $versionNode = $xml.Project.PropertyGroup[0].Version
-          $parts = $versionNode.Split('.')
-          $parts[2] = [string]([int]$parts[2] + 1)
-          $newVersion = $parts -join '.'
-          $xml.Project.PropertyGroup[0].Version = $newVersion
-          $xml.Project.PropertyGroup[0].FileVersion = $newVersion
-          $xml.Save((Resolve-Path $csproj))
-          Write-Host "Version bumped to $newVersion"
+          $content = Get-Content $csproj -Raw
+          if ($content -match '<Version>(\d+\.\d+\.\d+\.\d+)</Version>') {
+            $oldVersion = $Matches[1]
+            $parts = $oldVersion.Split('.')
+            $parts[2] = [string]([int]$parts[2] + 1)
+            $newVersion = $parts -join '.'
+            $content = $content -replace "<Version>$oldVersion</Version>", "<Version>$newVersion</Version>"
+            $content = $content -replace "<FileVersion>$oldVersion</FileVersion>", "<FileVersion>$newVersion</FileVersion>"
+            Set-Content $csproj $content -NoNewline
+            Write-Host "Version bumped from $oldVersion to $newVersion"
+          } else {
+            Write-Error "Could not find Version element in csproj"
+            exit 1
+          }
 
       - name: Commit version bump
         run: |
