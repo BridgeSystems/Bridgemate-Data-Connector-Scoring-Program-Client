@@ -7,14 +7,40 @@ on:
 jobs:
   publish:
     runs-on: windows-latest
+    # Skip runs triggered by the version bump commit itself
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
+
+      - name: Bump version
+        shell: pwsh
+        run: |
+          $csproj = "BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.csproj"
+          $xml = [xml](Get-Content $csproj)
+          $versionNode = $xml.Project.PropertyGroup[0].Version
+          $parts = $versionNode.Split('.')
+          $parts[2] = [string]([int]$parts[2] + 1)
+          $newVersion = $parts -join '.'
+          $xml.Project.PropertyGroup[0].Version = $newVersion
+          $xml.Project.PropertyGroup[0].FileVersion = $newVersion
+          $xml.Save((Resolve-Path $csproj))
+          Write-Host "Version bumped to $newVersion"
+
+      - name: Commit version bump
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.csproj
+          git commit -m "Bump version [skip ci]"
+          git push
 
       - name: Restore dependencies
         run: dotnet restore
