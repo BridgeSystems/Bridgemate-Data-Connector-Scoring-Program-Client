@@ -264,7 +264,7 @@ namespace BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO
         OwnResultAndOtherResults,
 
         /// <summary>
-        /// Results shown at the end of the round in the board overview
+        /// Results shown at the end of the round in the board overview.
         /// </summary>
         AtEndOfRound
     }
