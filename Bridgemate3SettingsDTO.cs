@@ -261,7 +261,12 @@ namespace BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO
         /// <summary>
         /// Other results, including the own results, on the board can be viewed.
         /// </summary>
-        OwnResultAndOtherResults
+        OwnResultAndOtherResults,
+
+        /// <summary>
+        /// Results shown at the end of the round in the board overview
+        /// </summary>
+        AtEndOfRound
     }
 
     /// <summary>
