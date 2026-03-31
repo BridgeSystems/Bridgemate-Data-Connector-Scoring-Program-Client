@@ -7,14 +7,45 @@ on:
 jobs:
   publish:
     runs-on: windows-latest
+    # Skip runs triggered by the version bump commit itself
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
+
+      - name: Bump version
+        shell: pwsh
+        run: |
+          $csproj = "BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.csproj"
+          $content = Get-Content $csproj -Raw
+          if ($content -match '<Version>(\d+\.\d+\.\d+\.\d+)</Version>') {
+            $oldVersion = $Matches[1]
+            $parts = $oldVersion.Split('.')
+            $parts[2] = [string]([int]$parts[2] + 1)
+            $newVersion = $parts -join '.'
+            $content = $content -replace "<Version>$oldVersion</Version>", "<Version>$newVersion</Version>"
+            $content = $content -replace "<FileVersion>$oldVersion</FileVersion>", "<FileVersion>$newVersion</FileVersion>"
+            Set-Content $csproj $content -NoNewline
+            Write-Host "Version bumped from $oldVersion to $newVersion"
+          } else {
+            Write-Error "Could not find Version element in csproj"
+            exit 1
+          }
+
+      - name: Commit version bump
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient.csproj
+          git commit -m "Bump version [skip ci]"
+          git push
 
       - name: Restore dependencies
         run: dotnet restore
