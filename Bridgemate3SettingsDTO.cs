@@ -88,6 +88,22 @@ namespace BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO
     }
 
     /// <summary>
+    /// Players must identify themselves at the start of the session by entering their playernumber.
+    /// </summary>
+    public enum Bm3PlayerNumberMandatoryOption
+    {
+       /// <summary>
+       /// Indicates that the feature or functionality is disabled.
+       /// </summary>
+        Disabled,
+        
+        /// <summary>
+        /// Inidcates that the feature is enabled.
+        /// </summary>
+        Enabled
+    }
+
+    /// <summary>
     /// Specifies whether starting positions should be confirmed by players at start of the session
     /// </summary>
     public enum BM3StartingPositionsOption
@@ -262,6 +278,21 @@ namespace BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO
         /// Other results, including the own results, on the board can be viewed.
         /// </summary>
         OwnResultAndOtherResults
+    }
+
+    /// <summary>
+    /// Specifies whether session summaries are enabled or disabled.
+    /// </summary>
+    public enum Bm3SessionSummaryOption
+    {
+        /// <summary>
+        /// Indicates that the feature or functionality is disabled.
+        /// </summary>
+
+        /// <summary>
+        /// Indicates that the feature or functionality is enabled.
+        /// </summary>
+        Enabled
     }
 
     /// <summary>
@@ -519,6 +550,14 @@ namespace BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO
         }
 
         /// <summary>
+        /// Specifies if players must identify themselves at the start of the session by entering their playernumber.
+        /// </summary>
+        public Bm3PlayerNumberMandatoryOption BM3PlayerNumberMandatory
+        {
+            get; set;
+        }
+
+        /// <summary>
         /// Specifies whether starting positions should be confirmed by players at start of the session
         /// </summary>
         public BM3StartingPositionsOption BM3StartingPositions
@@ -562,6 +601,14 @@ namespace BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO
         /// Specifies if the Bridgemate will show the other results for the board that was just entered.
         /// </summary>
         public Bm3ViewResultsOption BM3ViewResults
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// Specifies if the Bridgemate will show a session summary with all the scores obtained in the session once the session has ended.
+        /// </summary>
+        public Bm3SessionSummaryOption BM3SessionSummary
         {
             get; set;
         }
