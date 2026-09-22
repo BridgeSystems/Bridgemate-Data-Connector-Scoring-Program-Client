@@ -73,7 +73,8 @@ namespace DtoGenerator
 
         private static ParticipationDTO Participation(int table = 1, TableDirection direction = TableDirection.North,
                                                       int round = 1, string? playerNumber = "1001", string letters = "A",
-                                                      string guid = Guid1, string? lastName = null) =>
+                                                      string guid = Guid1, string? lastName = null,
+                                                      bool isRemoval = false, bool isPlayerSwap = false) =>
             new()
             {
                 SessionGuid = guid,
@@ -82,7 +83,9 @@ namespace DtoGenerator
                 Direction = direction,
                 RoundNumber = round,
                 PlayerNumber = playerNumber,
-                LastName = lastName
+                LastName = lastName,
+                IsRemoval = isRemoval,
+                IsPlayerSwap = isPlayerSwap
             };
 
         private static PlayerDataDTO Player(string number, string guid = Guid1) =>
@@ -266,6 +269,11 @@ namespace DtoGenerator
             Case("number-and-name-disallowed", Participation(lastName: "Smith"), Validate, DisallowNumberAndName);
             var multi = Participation(table: 0, round: -1, guid: "ABC");
             Case("multiple-errors-ordered", multi, Validate, DisallowNumberAndName);
+            //A removal: the seat is emptied, so the DTO carries no player at all.
+            Case("valid-removal", Participation(playerNumber: null, isRemoval: true), Validate, DisallowNumberAndName);
+            Case("removal-with-player", Participation(lastName: "Smith", isRemoval: true), Validate, DisallowNumberAndName);
+            Case("removal-and-swap", Participation(playerNumber: null, isRemoval: true, isPlayerSwap: true), Validate, DisallowNumberAndName);
+            Case("removal-invalid-seat", Participation(table: 0, playerNumber: null, isRemoval: true), Validate, DisallowNumberAndName);
         }
 
         private void EmitPlayerDataCases()

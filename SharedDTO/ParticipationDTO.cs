@@ -20,6 +20,8 @@ namespace BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO
     ///    participation for its own round exactly as sent and does not calculate seatings from the
     ///    movement. Use this for individual sessions and other formats where partnerships change
     ///    between rounds.
+    /// 4. To report that a seat was emptied (<see cref="IsRemoval"/>): the player who sat there was removed. Such a DTO
+    ///    carries no player number and no name.
     /// The combination of both playernumber and name details is not supported.
     /// </summary>
     public class ParticipationDTO
@@ -98,6 +100,23 @@ namespace BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO
         }
 
         /// <summary>
+        /// Signals that the player who sat at this seat was removed and the seat is now empty. The DTO then carries no
+        /// player: <see cref="PlayerNumber"/>, <see cref="FirstName"/>, <see cref="LastName"/> and <see cref="CountryCode"/>
+        /// must be empty. The seat is identified by the session, section, table, direction and round, with the same rules
+        /// as any participation: round zero or one means the first round, in a section without explicit participations the
+        /// player leaves the pair (every round), in a section with explicit participations only the given round is emptied.
+        /// </summary>
+        /// <remarks>BCS sends one per seat it cleared, in the queues that
+        /// <see cref="ScoringProgramDataConnectorCommands.PollQueueForNewParticipations">PollQueueForNewParticipations</see> and
+        /// <see cref="ScoringProgramDataConnectorCommands.PollQueueForAllParticipations">PollQueueForAllParticipations</see>
+        /// return. A scoring program that does not know this property sees a participation without a player, which it should
+        /// ignore.</remarks>
+        public bool IsRemoval
+        {
+            get; set;
+        }
+
+        /// <summary>
         /// Optional, must only be used when the playernumber is empty.
         /// </summary>
         public string FirstName
@@ -156,6 +175,22 @@ namespace BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO
             {
                 validationMessages.Add($"Invalid {nameof(RoundNumber)} ({RoundNumber}). The value cannot be negative.");
             }
+            if (IsRemoval)
+            {
+                if (!string.IsNullOrWhiteSpace(PlayerNumber) || !string.IsNullOrWhiteSpace(FirstName) ||
+                    !string.IsNullOrWhiteSpace(LastName) || !string.IsNullOrWhiteSpace(CountryCode))
+                {
+                    validationMessages.Add($"A removal ({nameof(IsRemoval)}) must not specify a {nameof(PlayerNumber)}, " +
+                                           $"{nameof(FirstName)}, {nameof(LastName)} or {nameof(CountryCode)}.");
+                }
+                if (IsPlayerSwap)
+                {
+                    validationMessages.Add($"A participation cannot be both a removal ({nameof(IsRemoval)}) " +
+                                           $"and a player swap ({nameof(IsPlayerSwap)}).");
+                }
+                ValidationMessages = validationMessages.ToArray();
+                return !ValidationMessages.Any();
+            }
             if (string.IsNullOrWhiteSpace(LastName) && string.IsNullOrWhiteSpace(PlayerNumber))
             {
                 validationMessages.Add($"Either the {nameof(LastName)} or the {nameof(PlayerNumber)} must be specified.");
@@ -174,6 +209,8 @@ namespace BridgeSystems.Bridgemate.DataConnectorClasses.SharedDTO
 
         public override string ToString()
         {
+            if (IsRemoval)
+                return $"REMOVE {SectionLetters}{TableNumber} {Direction} round {RoundNumber}";
             return $"{(IsPlayerSwap?"SWAP ":"")}{SectionLetters}{TableNumber} {Direction} round {RoundNumber}: {PlayerNumber} {FirstName} {LastName}";
         }
     }

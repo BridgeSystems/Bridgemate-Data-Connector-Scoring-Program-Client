@@ -29,6 +29,7 @@
         "RoundNumber": 2,
         "PlayerNumber": "1001",
         "IsPlayerSwap": false,
+        "IsRemoval": false,
         "FirstName": null,
         "LastName": null,
         "CountryCode": null,
