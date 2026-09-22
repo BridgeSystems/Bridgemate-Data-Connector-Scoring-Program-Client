@@ -12,6 +12,7 @@
     "RoundNumber": 1,
     "PlayerNumber": null,
     "IsPlayerSwap": false,
+    "IsRemoval": false,
     "FirstName": null,
     "LastName": "Smith",
     "CountryCode": null,

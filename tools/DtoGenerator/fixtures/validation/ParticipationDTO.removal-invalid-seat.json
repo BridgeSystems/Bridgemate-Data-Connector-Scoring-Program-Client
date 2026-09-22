@@ -1,18 +1,18 @@
 {
   "Dto": "ParticipationDTO",
-  "Case": "invalid-sectionletters",
+  "Case": "removal-invalid-seat",
   "Args": {
     "allowPlayerNumberAndName": false
   },
   "Payload": {
     "SessionGuid": "A1B2C3D4E5F60718293A4B5C6D7E8F90",
-    "SectionLetters": "A1",
-    "TableNumber": 1,
+    "SectionLetters": "A",
+    "TableNumber": 0,
     "Direction": 1,
     "RoundNumber": 1,
-    "PlayerNumber": "1001",
+    "PlayerNumber": null,
     "IsPlayerSwap": false,
-    "IsRemoval": false,
+    "IsRemoval": true,
     "FirstName": null,
     "LastName": null,
     "CountryCode": null,
@@ -20,6 +20,6 @@
   },
   "ExpectedValid": false,
   "ExpectedMessages": [
-    "Invalid SectionLetters (A1). Valid values are: \u0027A-Z\u0027, \u0027AA-ZZ\u0027 or \u0027AAA\u0027,\u0027ZZZ\u0027"
+    "Invalid TableNumber (0). The value must be greater than zero."
   ]
 }
