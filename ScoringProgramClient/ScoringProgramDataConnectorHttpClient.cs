@@ -43,15 +43,29 @@ namespace BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient
 
         /// <summary>
         /// The registry key under HKEY_CURRENT_USER where the data connector service publishes the http port it actually
-        /// bound (value "HttpPort", DWORD) and its binding ("HttpBinding": "lan", "local" or "off"). Each Windows user runs
-        /// their own data connector instance, hence the per-user hive.
+        /// bound (value <see cref="PublishedHttpPortValueName"/>, DWORD), its binding (<see cref="PublishedHttpBindingValueName"/>:
+        /// "lan", "local" or "off") and its process id (<see cref="PublishedProcessIdValueName"/>, DWORD). Each Windows user
+        /// runs their own data connector instance, hence the per-user hive.
         /// </summary>
         public const string DataConnectorPublicationRegistryKey = @"Software\Bridge Systems BV\BridgemateDataConnector";
 
+        /// <summary>The registry value holding the http port the data connector service bound.</summary>
+        public const string PublishedHttpPortValueName = "HttpPort";
+
+        /// <summary>The registry value holding the binding of the data connector service: "lan", "local" or "off".</summary>
+        public const string PublishedHttpBindingValueName = "HttpBinding";
+
+        /// <summary>
+        /// The registry value holding the process id of the data connector instance that published the port and binding,
+        /// so that values left behind by an instance that no longer runs can be recognised. Absent with data connector
+        /// versions that predate it.
+        /// </summary>
+        public const string PublishedProcessIdValueName = "HttpProcessId";
+
         /// <summary>
         /// The http port the data connector service of the current Windows user has published, or null when it has not
-        /// published one (service never ran, or a version that predates port publication).
-        /// Mind: the value can be stale when the service is not running; a failing ping tells.
+        /// published one (service never ran, or a version that predates port publication) or when the instance that
+        /// published it no longer runs.
         /// </summary>
         public static int? PublishedLocalHttpPort
         {
@@ -61,7 +75,8 @@ namespace BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient
                 {
                     using (var key = Registry.CurrentUser.OpenSubKey(DataConnectorPublicationRegistryKey))
                     {
-                        if (key?.GetValue("HttpPort") is int port && port > 0 && port <= 65535)
+                        if (key != null && IsPublisherRunning(key) &&
+                            key.GetValue(PublishedHttpPortValueName) is int port && port > 0 && port <= 65535)
                             return port;
                     }
                 }
@@ -70,6 +85,29 @@ namespace BridgeSystems.Bridgemate.DataConnector.ScoringProgramClient
                     //Non-Windows platform or no registry access: fall back to the default port.
                 }
                 return null;
+            }
+        }
+
+        //The published values outlive the instance that wrote them: a data connector that was killed (for instance by
+        //the data connector of an old installation, which has the same process name) leaves them behind. Values without
+        //a process id come from a data connector that predates its publication; they are taken at face value.
+        private static bool IsPublisherRunning(RegistryKey key)
+        {
+            if (!(key.GetValue(PublishedProcessIdValueName) is int processId))
+                return true;
+            try
+            {
+                using (var process = System.Diagnostics.Process.GetProcessById(processId))
+                {
+                    //Guards against the process id having been reused by an unrelated process.
+                    return string.Equals(process.ProcessName, BridgemateDataConnectorManager.DataConnectorProcessName,
+                                         StringComparison.OrdinalIgnoreCase);
+                }
+            }
+            catch
+            {
+                //No process with this id: the publishing instance has exited.
+                return false;
             }
         }
 

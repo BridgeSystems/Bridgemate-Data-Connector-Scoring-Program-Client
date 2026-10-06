@@ -29,7 +29,8 @@ The `ScoringProgramDataConnectorHttpClient` class implements the same `IScoringP
 ```csharp
 //Data Connector on the same computer. The client finds the port automatically: the Data Connector service
 //publishes the port it listens on in the registry (HKEY_CURRENT_USER\Software\Bridge Systems BV\BridgemateDataConnector,
-//value HttpPort). When nothing is published the default port 5079 is assumed.
+//value HttpPort). When nothing is published, or the Data Connector instance that published it (value HttpProcessId)
+//no longer runs, the default port 5079 is assumed.
 var client = ScoringProgramDataConnectorHttpClient.Instance(clubId, licenceKey);
 
 //Optionally start the local Data Connector service if it is not running before pinging:
